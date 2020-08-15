@@ -2,6 +2,7 @@ import {
   APP_VERSION,
   APP_PACKAGE_ANDROID,
   APP_PACKAGE_IOS,
+  ENV,
   GRAPHQL_SERVER,
   PUSHER_CHANNEL_AUTH_URL,
   PUSHER_CHANNEL_PREFIX,
@@ -19,6 +20,7 @@ import {
  * This hook allows to abbreviate access to dot env variables
  * @author Jako <jakop.box@gmail.com>
  * @returns {{
+ *  env: *,
  *  pusher: {
  *      cluster: *,
  *      auth: *,
@@ -45,6 +47,7 @@ const useApplicationConfig = () => ({
   androidID: APP_PACKAGE_ANDROID,
   apiServer: GRAPHQL_SERVER,
   appCode: APP_CODE,
+  env: ENV,
   google: {
     apiKey: GOOGLE_API_KEY,
   },
