@@ -31,9 +31,10 @@ const useNavigate = () => {
     redirectWith: (paths = []) => {
       // navigation.dispatch(StackActions.reset(paths));
     },
-    reset: () => {
-
+    goBack: () => {
+      navigation.goBack();
     },
+    reset: () => {},
   };
 };
 
