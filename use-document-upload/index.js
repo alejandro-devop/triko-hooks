@@ -31,18 +31,17 @@ const useDocumentUpload = () => {
       onError,
       attrs = {},
     } = payload;
-    setLoading(true);
+    // setLoading(true);
     try {
       const variables = {
         reqId: documentId,
         step,
-        file: files ? JSON.stringify(files) : null,
+        file: files && files.length > 0 ? JSON.stringify(files) : null,
         triko: triko.id,
         trikoReq: requirementId,
         locale,
         attrs: JSON.stringify(attrs),
       };
-
       const response = await uploadFile({
         variables,
       });
