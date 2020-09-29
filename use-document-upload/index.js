@@ -31,7 +31,7 @@ const useDocumentUpload = () => {
       onError,
       attrs = {},
     } = payload;
-    // setLoading(true);
+    setLoading(true);
     try {
       const variables = {
         reqId: documentId,
