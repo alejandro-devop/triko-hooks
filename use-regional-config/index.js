@@ -37,6 +37,7 @@ const useRegionConfig = () => {
     termsUrl,
     welcomeVideo: '3O8C2d9e4i0', // Deprecated
     landingUrl: 'https://triko.co',
+    trikoFavorIds: [10, 20],
   };
   return appConfigs;
 };
