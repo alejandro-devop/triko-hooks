@@ -1,6 +1,26 @@
 import useTranslation from 'hooks/useTranslation';
 import ImagePicker from 'react-native-image-picker';
 
+/**
+ * capturePhoto({
+      onCustom: button => {
+        if (button === 'vu') {
+          toggleVisible();
+        }
+      },
+      onPhotoSelected: response => {
+        const {uri, data} = response;
+        if (onTaken) {
+          onTaken({
+            uri,
+            data,
+          });
+        }
+      },
+    });
+ * @param otherOptions
+ * @returns {Function}
+ */
 const usePhotoCapture = (otherOptions = {}) => {
   const {_t} = useTranslation();
   const options = {
@@ -19,7 +39,7 @@ const usePhotoCapture = (otherOptions = {}) => {
   };
   return (config = {}) => {
     const {onCustom, onPhotoSelected, onCancel, onError} = config;
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.showImagePicker(options, (response) => {
       if (response.didCancel && onCancel) {
         onCancel(response.didCancel);
       } else if (response.error && onError) {

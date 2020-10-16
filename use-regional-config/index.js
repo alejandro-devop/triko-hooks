@@ -12,6 +12,7 @@ const useRegionConfig = () => {
   } = useSession();
   const {payments = {}, rate = {}, support = {}} = regionalConfig || {};
   const {placetopay = {}} = payments || {};
+  const shopperMinimumRate = 10000;
   const {
     contactEmail,
     supportEmailSubject,
@@ -20,13 +21,13 @@ const useRegionConfig = () => {
     termsUrl,
   } = support;
   const {place2payUrl, paymentContactEmail} = placetopay;
-  const {maximunRate, minimunRate, rateStep} = rate;
+  const {maximumRate, minimumRate, rateStep} = rate;
 
   const appConfigs = {
     availableCountries: ['CO', 'US'],
     rateStep,
-    minimumRate: minimunRate,
-    maximumRate: maximunRate,
+    minimumRate: minimumRate,
+    maximumRate: maximumRate,
     contactWhatsApp,
     whatsappMessage,
     contactEmail,
@@ -38,6 +39,7 @@ const useRegionConfig = () => {
     welcomeVideo: '3O8C2d9e4i0', // Deprecated
     landingUrl: 'https://triko.co',
     trikoFavorIds: [10, 20],
+    shopperMinimumRate,
   };
   return appConfigs;
 };

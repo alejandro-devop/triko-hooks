@@ -2,12 +2,12 @@ import {useState} from 'react';
 import Geocoder from 'react-native-geocoder';
 import Geocoding from 'react-native-geocoding';
 
-const cleanAddress = address => {
+export const cleanAddress = (address) => {
   const [street] = address.split(',');
   return street;
 };
 
-const getGeocodeAddress = async ({latitude, longitude}) => {
+export const getGeocodeAddress = async ({latitude, longitude}) => {
   const {results = []} = await Geocoding.from({latitude, longitude});
   const [firstResult = {}] = results;
   const {formatted_address} = firstResult;
@@ -37,7 +37,7 @@ const useAddressFinder = () => {
         latitude: lat,
         longitude: lng,
       });
-
+      console.log('Finding location: ');
       if (Array.isArray(response)) {
         const [matchedPos] = response;
         const {
@@ -45,6 +45,7 @@ const useAddressFinder = () => {
           country,
           countryCode,
           locality: city,
+          subAdminArea,
         } = matchedPos;
         const formattedResponse = {
           department,
@@ -52,6 +53,7 @@ const useAddressFinder = () => {
           countryCode,
           address: cleanAddress(addressFormatted),
           city,
+          locality: `${city}${subAdminArea ? ' - ' + subAdminArea : ''}`,
         };
         setLocationInfo(formattedResponse);
         setLoading(false);

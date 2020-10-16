@@ -4,7 +4,8 @@ import {GET_PENDING_REQUEST_CLIENT, GET_PENDING_REQUEST_TRIKO} from './queries';
 import {useMemo} from 'react';
 import useRegionConfig from 'shared/hooks/use-regional-config';
 
-const useRequestList = (filter, isTriko) => {
+const useRequestList = (options = {}) => {
+  const {onlyFavors, isTriko, onlyCurrentDay, onlyMyServices} = options;
   const {
     stack: {client = {}, triko = {}, locale},
   } = useSession();
@@ -27,10 +28,10 @@ const useRequestList = (filter, isTriko) => {
       const [detail = []] = item.details;
       const {service} = detail;
       const included = trikoFavorIds.includes(service.type.id);
-      return filter === 0 ? !included : included;
+      return !onlyFavors ? !included : included;
     });
     return requestsList;
-  }, [data, filter]);
+  }, [data, onlyFavors]);
 
   return {
     getPendingRequests,

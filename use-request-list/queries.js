@@ -167,6 +167,7 @@ export const GET_PENDING_REQUEST_TRIKO = gql`
           id
           name
           icon
+          attrs
           type: servicetype {
             id
             name
