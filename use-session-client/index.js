@@ -14,9 +14,9 @@ import SessionService from 'services/SessionService';
  * @app Client
  * @param {*} callBack
  */
-const useSession = callBack => {
+const useSession = (callBack) => {
   const dispatch = useDispatch();
-  const stack = useSelector(state => {
+  const stack = useSelector((state) => {
     return callBack ? callBack(state.session) : state.session;
   });
   return {
@@ -25,11 +25,11 @@ const useSession = callBack => {
       dispatch(setSession(key, value));
       SessionService.write(key, value);
     },
-    removeKey: key => {
+    removeKey: (key) => {
       dispatch(removeSession(key));
       SessionService.remove(key);
     },
-    setAll: async keys => {
+    setAll: async (keys) => {
       dispatch(setAllSession(keys));
       await SessionService.writeAll(keys);
     },
@@ -43,7 +43,7 @@ const useSession = callBack => {
         regionalConfig: stack.regionalConfig,
       });
     },
-    login: async payload => {
+    login: async (payload) => {
       const {
         api_token: token,
         id,
@@ -54,7 +54,9 @@ const useSession = callBack => {
         phonenumber,
         region = {},
         client = {},
+        attrs = '{}',
       } = payload;
+      const userAttrs = JSON.parse(attrs);
       const userKeys = {
         id,
         name,
@@ -62,6 +64,7 @@ const useSession = callBack => {
         workflow: transition.workflow,
         photo_url,
         phonenumber,
+        attrs: userAttrs,
       };
       const generalKeys = {
         logged: true,

@@ -32,17 +32,19 @@ const useUserUpdate = () => {
         ...user.attrs,
         ...attrs,
       };
-      // First, update the user attrs in session.
-      setKey('user', {
-        ...user,
-        attrs: newAttrs,
-      });
+
       // Then, send the request to the api.
       await sendUpdate({
         variables: {
           id: user.id,
           attrs: JSON.stringify(newAttrs),
         },
+      });
+
+      // First, update the user attrs in session.
+      setKey('user', {
+        ...user,
+        attrs: newAttrs,
       });
     } catch (e) {
       console.log('Error: ', e);
