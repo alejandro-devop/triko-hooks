@@ -17,7 +17,7 @@ import SessionService from 'shared/services/session-service';
  */
 const useSession = (callBack = null) => {
   const dispatch = useDispatch();
-  const stack = useSelector(state => {
+  const stack = useSelector((state) => {
     return callBack ? callBack(state.session) : state.session;
   });
   return {
@@ -26,11 +26,11 @@ const useSession = (callBack = null) => {
       dispatch(setSession(key, value));
       SessionService.write(key, value);
     },
-    removeKey: key => {
+    removeKey: (key) => {
       dispatch(removeSession(key));
       SessionService.remove(key);
     },
-    setAll: keys => {
+    setAll: (keys) => {
       dispatch(setAllSession(keys));
       SessionService.writeAll(keys);
     },
@@ -44,7 +44,7 @@ const useSession = (callBack = null) => {
         regionalConfig: stack.regionalConfig,
       });
     },
-    login: async payload => {
+    login: async (payload) => {
       const {
         api_token: token,
         id,
