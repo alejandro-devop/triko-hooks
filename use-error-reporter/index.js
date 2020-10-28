@@ -1,5 +1,5 @@
 const useErrorReporter = (config = {}) => {
-  const {componentPath} = config;
+  const {componentPath, path} = config;
   return (errorInfo = {}) => {};
 };
 
