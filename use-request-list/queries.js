@@ -73,8 +73,9 @@ export const GET_PENDING_REQUEST_CLIENT = gql`
         workflow
       }
 
-      client {
+      triko {
         id
+        rating
         pi: personalinformation {
           id
           id_number
