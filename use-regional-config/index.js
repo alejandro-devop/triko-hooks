@@ -21,7 +21,11 @@ const useRegionConfig = () => {
     whatsappMessage,
     termsUrl,
   } = support;
-  const {dayStartsAt = '04:00:00 am', dayEndsAt = '11:59:59 pm'} = general;
+  const {
+    dayStartsAt = '04:00:00 am',
+    dayEndsAt = '11:59:59 pm',
+    trikoFavorIds,
+  } = general;
   const {place2payUrl, paymentContactEmail} = placetopay;
   const {maximumRate, minimumRate, rateStep} = rate;
 
@@ -42,7 +46,7 @@ const useRegionConfig = () => {
     termsUrl,
     welcomeVideo: '3O8C2d9e4i0', // Deprecated
     landingUrl: 'https://triko.co',
-    trikoFavorIds: [10, 20],
+    trikoFavorIds: trikoFavorIds || [11, 22],
     shopperMinimumRate,
   };
   return appConfigs;

@@ -4,6 +4,17 @@ import {GET_PENDING_REQUEST_CLIENT, GET_PENDING_REQUEST_TRIKO} from './queries';
 import {useMemo} from 'react';
 import useRegionConfig from 'shared/hooks/use-regional-config';
 
+export const TYPE_REQUEST = 1;
+export const TYPE_EMERGENCY = 2;
+export const TYPE_BAG = 3;
+
+const getType = ({onlyFavors}) => {
+  if (onlyFavors) {
+    return TYPE_BAG;
+  }
+  return TYPE_REQUEST;
+};
+
 const useRequestList = (options = {}) => {
   const {onlyFavors, isTriko, onlyCurrentDay, onlyMyServices} = options;
   const {
@@ -12,6 +23,7 @@ const useRequestList = (options = {}) => {
   const {trikoFavorIds = []} = useRegionConfig();
   const variables = {
     ...(isTriko ? {triko: triko.id} : {client: client.id}),
+    type: getType(options),
     locale,
   };
   const [getPendingRequests, {data = {}, loading}] = useLazyQuery(

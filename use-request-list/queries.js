@@ -116,11 +116,23 @@ export const GET_PENDING_REQUEST_CLIENT = gql`
 `;
 
 export const GET_PENDING_REQUEST_TRIKO = gql`
-  query getPendingRequests($client: Int, $triko: Int, $locale: String = "en") {
+  query getPendingRequests(
+    $client: Int
+    $rejected: Boolean
+    $triko: Int
+    $nearest: String
+    $locale: String = "en"
+    $type: Int = 1
+    $workflow: Int
+  ) {
     response: servicesrequests(
       client_id: $client
       triko_id: $triko
+      includeRejected: $rejected
+      closeToMe: $nearest
+      service_request_type_id: $type
       locale: $locale
+      workflow_transition_id: $workflow
     ) {
       id
       address
