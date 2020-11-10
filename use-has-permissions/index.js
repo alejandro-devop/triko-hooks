@@ -6,9 +6,7 @@ import {
   ANDROID_PERMISSIONS,
   IOS_PERMISSIONS,
 } from 'components/base/permissions-manager';
-import RNPermissions, {
-  PERMISSIONS as RN_PERMISSSIONS,
-} from 'react-native-permissions';
+import RNPermissions from 'react-native-permissions';
 
 export const APP_PERMISSIONS = {...PERMISSIONS};
 
@@ -34,29 +32,32 @@ const useHasPermissions = (options = {}) => {
       ),
     );
     permissionStatuses.forEach((status, key) => {
-      let granted = null;
+      let granted = false;
       if (status === 'granted') {
         granted = true;
-      } else if (status === 'blocked') {
-        granted = false;
       }
       grantedPermissions[permissions[key]] = granted;
     });
-    setAppPermissions({...grantedPermissions});
+    setAppPermissions(grantedPermissions);
   };
 
   const checkAndroid = async () => {};
 
-  useEffect(() => {
+  const checkPermissions = async () => {
     if (Platform.OS === 'ios') {
-      checkIos();
+      await checkIos();
     } else {
-      checkAndroid();
+      await checkAndroid();
     }
+  };
+
+  useEffect(() => {
+    checkPermissions();
   }, []);
 
   return {
     appPermissions,
+    reCheck: checkPermissions,
   };
 };
 

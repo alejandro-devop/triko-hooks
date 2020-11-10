@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 
 Geolocation.setRNConfiguration({
@@ -7,19 +7,22 @@ Geolocation.setRNConfiguration({
 
 const useLocationObserver = (options = {}) => {
   const {
-    distanceFilter = 20,
-    timeout = 1000,
+    distanceFilter,
+    timeout,
     enableHighAccuracy = false,
-    maximumAge = 5000,
+    maximumAge,
   } = options;
   const [initialized, setInitialized] = useState(false);
   const [location, setLocation] = useState({latitude: null, longitude: null});
   let observerId = null;
 
   const initialize = async () => {
+    console.clear();
+    console.log('Initializing watcher!');
     setInitialized(true);
     observerId = Geolocation.watchPosition(
       ({coords: {latitude, longitude}}) => {
+        console.log('The location change! ', latitude, longitude);
         setLocation({
           latitude,
           longitude,
@@ -47,6 +50,7 @@ const useLocationObserver = (options = {}) => {
     initialized,
     location,
     stopObserver,
+    getLocation: () => location,
   };
 };
 

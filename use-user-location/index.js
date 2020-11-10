@@ -1,6 +1,9 @@
 import {useEffect, useState} from 'react';
 import useNotify from 'hooks/useNotification';
 import Geolocation from '@react-native-community/geolocation';
+// Geolocation.setRNConfiguration({
+//   skipPermissionRequests: true,
+// });
 
 const useUserLocation = (options = {}) => {
   const {onLocationFound} = options;
@@ -11,13 +14,20 @@ const useUserLocation = (options = {}) => {
     setLoading(true);
     try {
       if (Geolocation) {
-        Geolocation.getCurrentPosition(async ({coords}) => {
-          const {latitude: lat, longitude: lng} = coords;
-          if (onLocationFound) {
-            onLocationFound({lat, lng});
-          }
-          setLocation({lat, lng});
-        });
+        Geolocation.getCurrentPosition(
+          async ({coords}) => {
+            const {latitude: lat, longitude: lng} = coords;
+            if (onLocationFound) {
+              onLocationFound({lat, lng});
+            }
+            setLocation({lat, lng});
+          },
+          () => {},
+          {
+            maximumAge: 0,
+            enableHighAccuracy: true,
+          },
+        );
       }
       setLoading(false);
     } catch (e) {

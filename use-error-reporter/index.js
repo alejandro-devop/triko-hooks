@@ -1,6 +1,8 @@
 const useErrorReporter = (config = {}) => {
   const {componentPath, path} = config;
-  return (errorInfo = {}) => {};
+  return (errorInfo = {}) => {
+    console.log('error: ', errorInfo);
+  };
 };
 
 export default useErrorReporter;

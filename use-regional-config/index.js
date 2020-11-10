@@ -10,7 +10,8 @@ const useRegionConfig = () => {
   const {
     stack: {regionalConfig},
   } = useSession();
-  const {payments = {}, rate = {}, support = {}} = regionalConfig || {};
+  const {payments = {}, rate = {}, support = {}, general = {}} =
+    regionalConfig || {};
   const {placetopay = {}} = payments || {};
   const shopperMinimumRate = 10000;
   const {
@@ -20,11 +21,14 @@ const useRegionConfig = () => {
     whatsappMessage,
     termsUrl,
   } = support;
+  const {dayStartsAt = '04:00:00 am', dayEndsAt = '11:59:59 pm'} = general;
   const {place2payUrl, paymentContactEmail} = placetopay;
   const {maximumRate, minimumRate, rateStep} = rate;
 
   const appConfigs = {
     availableCountries: ['CO', 'US'],
+    dayStartsAt,
+    dayEndsAt,
     rateStep,
     minimumRate: minimumRate,
     maximumRate: maximumRate,

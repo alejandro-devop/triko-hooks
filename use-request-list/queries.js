@@ -130,7 +130,7 @@ export const GET_PENDING_REQUEST_TRIKO = gql`
         id
         transition
         workflow: workflowtransition {
-          name: iworkflow
+          name: workflow
         }
         date: created_at
       }
