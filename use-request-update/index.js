@@ -4,6 +4,7 @@ import {UPDATE_REQUEST} from './queries';
 import useTranslation from 'hooks/useTranslation';
 import {useSession} from 'hooks/index';
 import useNotify from 'hooks/useNotification';
+import useErrorReporter from 'shared/hooks/use-error-reporter';
 
 const useRequestUpdate = () => {
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,10 @@ const useRequestUpdate = () => {
     stack: {locale},
   } = useSession();
   const {_t} = useTranslation();
-  const {error, success} = useNotify();
+  const {success} = useNotify();
+  const reportError = useErrorReporter({
+    path: 'src/shared/hooks/use-request-update/index.js',
+  });
   const updateRequest = async (request, payload = {}) => {
     setLoading(true);
     try {
@@ -20,17 +24,30 @@ const useRequestUpdate = () => {
         variables: {
           request: request.id,
           locale,
+          ...payload,
         },
       });
-      success(_t('pending_services_request_accepted'));
       setLoading(false);
     } catch (e) {
-      error(_t('genric_error', {code: ''}));
+      reportError(e);
       setLoading(false);
     }
   };
+
+  const cancelRequest = async (request = {}) => {
+    await updateRequest(request, {cancel: true});
+    success('request_canceled_success');
+  };
+
+  const acceptRequest = async (request = {}) => {
+    await updateRequest(request);
+    success(_t('pending_services_request_accepted'));
+  };
+
   return {
     loading,
+    acceptRequest,
+    cancelRequest,
     updateRequest,
   };
 };

@@ -7,6 +7,15 @@ import useRegionConfig from 'shared/hooks/use-regional-config';
 export const TYPE_REQUEST = 1;
 export const TYPE_EMERGENCY = 2;
 export const TYPE_BAG = 3;
+export const WORKFLOWS_MAP = {
+  pending: 21,
+  approved: 19,
+  rejected: 20,
+  accepted: 22,
+  payment: 23,
+  onMyWay: 24,
+  onYourDoor: 25,
+};
 
 const getType = ({onlyFavors}) => {
   if (onlyFavors) {
@@ -16,16 +25,37 @@ const getType = ({onlyFavors}) => {
 };
 
 const useRequestList = (options = {}) => {
-  const {onlyFavors, isTriko, onlyCurrentDay, onlyMyServices} = options;
   const {
-    stack: {client = {}, triko = {}, locale},
+    onlyFavors,
+    isTriko,
+    onlyCurrentDay,
+    onlyMyServices,
+    onlyPending,
+  } = options;
+  const {
+    stack: {client = {}, triko = {}, locale, currentLocation = {}},
   } = useSession();
-  const {trikoFavorIds = []} = useRegionConfig();
+  const {trikoFavorIds = [], defaultSearchDistance = 20} = useRegionConfig();
   const variables = {
     ...(isTriko ? {triko: triko.id} : {client: client.id}),
     type: getType(options),
     locale,
   };
+  if (onlyFavors) {
+    delete variables.triko;
+    delete variables.client;
+    const {latitude, longitude} = currentLocation;
+    variables.nearest = JSON.stringify({
+      longitude,
+      latitude,
+      radius: defaultSearchDistance,
+    });
+  }
+
+  if (onlyPending) {
+    variables.workflow = WORKFLOWS_MAP.pending;
+  }
+
   const [getPendingRequests, {data = {}, loading}] = useLazyQuery(
     isTriko ? GET_PENDING_REQUEST_TRIKO : GET_PENDING_REQUEST_CLIENT,
     {

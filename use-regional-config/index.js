@@ -25,6 +25,7 @@ const useRegionConfig = () => {
     dayStartsAt = '04:00:00 am',
     dayEndsAt = '11:59:59 pm',
     trikoFavorIds,
+    defaultSearchDistance,
   } = general;
   const {place2payUrl, paymentContactEmail} = placetopay;
   const {maximumRate, minimumRate, rateStep} = rate;
@@ -47,6 +48,7 @@ const useRegionConfig = () => {
     welcomeVideo: '3O8C2d9e4i0', // Deprecated
     landingUrl: 'https://triko.co',
     trikoFavorIds: trikoFavorIds || [11, 22],
+    defaultSearchDistance: defaultSearchDistance || 20,
     shopperMinimumRate,
   };
   return appConfigs;
