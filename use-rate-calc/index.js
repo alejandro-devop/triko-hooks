@@ -10,30 +10,35 @@ import {useSession} from 'hooks/index';
  * @returns {{total: *, loading: *}}
  */
 export const useCalcRate = (options = {}) => {
+  // services: servicesIds,
+  //   date: application_date,
+  //   duration: parseInt(duration, 10),
+  const {request = {}, byService = false} = options;
   const {
-    byService = false,
-    services = [],
-    date = '',
-    duration = 0,
-    byHour = 1,
-    type = 1,
-    distance = '',
-    time = '',
-    transport = 0,
-    tip = 0,
-  } = options;
+    details = [],
+    application_date: date,
+    duration,
+    byHour,
+    time,
+    type = {},
+    distance,
+    attrs = {},
+  } = request;
+  const {transport, tip} = attrs;
+  const services = details.map((item) => item.service.id);
   const {
     stack: {triko = {}, regionId},
   } = useSession();
+
   const {loading, data = {}} = useQuery(CALC_RATE, {
     fetchPolicy: 'no-cache',
     variables: {
       byService,
       services: JSON.stringify(services),
       date,
-      duration,
+      duration: parseInt(duration, 10),
       byHour,
-      type,
+      type: type.id,
       distance,
       time,
       transport,
