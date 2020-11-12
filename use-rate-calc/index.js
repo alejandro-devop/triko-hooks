@@ -92,9 +92,6 @@ export const useCalcRate = (options = {}) => {
 };
 
 export const useCalcRateClient = (options = {}) => {
-  // services: servicesIds,
-  //   date: application_date,
-  //   duration: parseInt(duration, 10),
   const {request = {}, byService = false} = options;
   const {
     details = [],
