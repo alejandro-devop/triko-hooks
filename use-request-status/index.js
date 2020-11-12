@@ -15,14 +15,23 @@ import {
 } from 'config/request-statuses';
 import useTranslation from 'hooks/useTranslation';
 
-const useRequestStatus = workflow => {
+const useRequestStatus = (workflow, detailed, paidOut) => {
   const {_t} = useTranslation();
-  const status = (workflowStatus => {
+  if (workflow === STATUS_PAYMENT && paidOut && !detailed) {
+    return _t('services_status_label_paid');
+  } else if (workflow === STATUS_PAYMENT && paidOut && detailed) {
+    return _t('services_status_label_paid_detailed');
+  }
+  const status = ((workflowStatus) => {
     switch (workflowStatus) {
       case STATUS_ACCEPTED:
-        return 'services_status_label_accepted';
+        return !detailed
+          ? 'services_status_label_accepted'
+          : 'services_status_label_accepted_detailed';
       case STATUS_PENDING:
-        return 'services_status_label_pending';
+        return !detailed
+          ? 'services_status_label_pending'
+          : 'services_status_label_pending_detailed';
       case STATUS_PAYMENT:
         return 'services_status_label_payment';
       case STATUS_ON_MY_WAY:

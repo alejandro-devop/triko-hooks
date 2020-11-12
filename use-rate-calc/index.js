@@ -109,6 +109,23 @@ export const useCalcRateClient = (options = {}) => {
   const {
     stack: {regionId},
   } = useSession();
+  console.log(
+    'Payload: ',
+    JSON.stringify({
+      date,
+      byService,
+      duration,
+      byHour,
+      time,
+      type,
+      distance,
+      triko,
+      regionId,
+      transport,
+      tip,
+      services,
+    }),
+  );
   const {loading, total} = useCalcTotal({
     date,
     byService,
