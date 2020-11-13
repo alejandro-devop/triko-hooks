@@ -15,6 +15,18 @@ import {
 } from 'config/request-statuses';
 import useTranslation from 'hooks/useTranslation';
 
+export const acceptedStatuses = [
+  STATUS_ACCEPTED,
+  STATUS_CONFIRM_START,
+  STATUS_ON_MY_WAY,
+  STATUS_ON_YOUR_DOOR,
+  STATUS_QUALIFY,
+  STATUS_PAYMENT,
+  STATUS_QUALIFY_CLIENT,
+  STATUS_QUALIFY_TRIKO,
+  STATUS_STARTED,
+];
+
 const useRequestStatus = (workflow, detailed, paidOut) => {
   const {_t} = useTranslation();
   if (workflow === STATUS_PAYMENT && paidOut && !detailed) {

@@ -1,6 +1,7 @@
 import {CALC_RATE} from './queries';
 import {useQuery} from '@apollo/react-hooks';
 import {useSession} from 'hooks/index';
+import useMyServices from 'hooks/useMyServices';
 
 const useCalcTotal = (options = {}) => {
   const {
@@ -51,42 +52,24 @@ const useCalcTotal = (options = {}) => {
  * @returns {{total: *, loading: *}}
  */
 export const useCalcRate = (options = {}) => {
-  // services: servicesIds,
-  //   date: application_date,
-  //   duration: parseInt(duration, 10),
-  const {request = {}, byService = false} = options;
+  const {request = {}} = options;
   const {
-    details = [],
-    application_date: date,
-    duration,
-    byHour,
-    time,
-    type = {},
-    distance,
-    attrs = {},
-  } = request;
-  const {transport, tip} = attrs;
-  const services = details.map((item) => item.service.id);
-  const {
-    stack: {triko = {}, regionId},
+    stack: {myServices = []},
   } = useSession();
+  const serviceIds = request.details.map((item) =>
+    parseInt(item.service.id, 10),
+  );
+  const requestServices = myServices.filter((item) =>
+    serviceIds.includes(parseInt(item.id, 10)),
+  );
+  const total =
+    requestServices.reduce((accumulator, currentItem) => {
+      accumulator += currentItem.price_base;
+      return accumulator;
+    }, 0) * parseInt(request.duration, 10);
 
-  const {loading, total} = useCalcTotal({
-    date,
-    byService,
-    duration,
-    byHour,
-    time,
-    type,
-    distance,
-    triko,
-    regionId,
-    transport,
-    tip,
-    services,
-  });
   return {
-    loading,
+    loading: false,
     total,
   };
 };
