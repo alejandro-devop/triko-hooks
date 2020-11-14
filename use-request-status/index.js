@@ -15,6 +15,17 @@ import {
 } from 'config/request-statuses';
 import useTranslation from 'hooks/useTranslation';
 
+export const startedStatuses = [
+  STATUS_CONFIRM_FINISHED,
+  STATUS_CONFIRM_START,
+  STATUS_ON_MY_WAY,
+  STATUS_ON_YOUR_DOOR,
+  STATUS_STARTED,
+  STATUS_QUALIFY_CLIENT,
+  STATUS_QUALIFY_TRIKO,
+  STATUS_FINISHED,
+];
+
 export const acceptedStatuses = [
   STATUS_ACCEPTED,
   STATUS_CONFIRM_START,
