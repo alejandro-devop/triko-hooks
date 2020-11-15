@@ -11,6 +11,7 @@ export const GET_PENDING_REQUEST_CLIENT = gql`
       address
       duration
       application_date
+      attributes
       history {
         id
         transition
@@ -138,6 +139,7 @@ export const GET_PENDING_REQUEST_TRIKO = gql`
       address
       duration
       application_date
+      attributes
       history {
         id
         transition

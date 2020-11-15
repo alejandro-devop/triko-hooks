@@ -74,7 +74,11 @@ const useRequestList = (options = {}) => {
       const {service} = detail;
       const included = trikoFavorIds.includes(service.type.id);
       const {workflow} = item.transition;
-      if (noFinished && workflow === STATUS_FINISHED) {
+      const attributes = item.attributes ? JSON.parse(item.attributes) : {};
+      const isFinished =
+        (isTriko && attributes.terminatedTriko) ||
+        (!isTriko && attributes.terminatedClient);
+      if (noFinished && isFinished) {
         return false;
       }
       if (noCanceled && workflow === STATUS_CANCEL) {
