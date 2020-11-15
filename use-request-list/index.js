@@ -3,7 +3,7 @@ import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_PENDING_REQUEST_CLIENT, GET_PENDING_REQUEST_TRIKO} from './queries';
 import {useMemo} from 'react';
 import useRegionConfig from 'shared/hooks/use-regional-config';
-import {STATUS_CANCEL, STATUS_FINISHED} from 'config/request-statuses';
+import {STATUS_CANCEL} from 'config/request-statuses';
 
 export const TYPE_REQUEST = 1;
 export const TYPE_EMERGENCY = 2;
