@@ -12,6 +12,7 @@ import {
   STATUS_QUALIFY_CLIENT,
   STATUS_QUALIFY_TRIKO,
   STATUS_STARTED,
+  STATUS_WAITING_FOR_TRIKO,
 } from 'config/request-statuses';
 import useTranslation from 'hooks/useTranslation';
 
@@ -77,6 +78,8 @@ const useRequestStatus = (workflow, detailed, paidOut) => {
         return 'services_status_label_finished';
       case STATUS_CANCEL:
         return 'services_status_label_cancel';
+      case STATUS_WAITING_FOR_TRIKO:
+        return 'services_status_label_waiting_for_triko';
       default:
         return 'Unknown';
     }

@@ -50,6 +50,27 @@ export const GET_PENDING_REQUEST_CLIENT = gql`
       }
       details: servicesrequestsdetails {
         id
+        products {
+          image {
+            url_download_file
+          }
+          measure: measureunit {
+            id
+            name
+            shortName: shortname
+          }
+          quantity: qty
+          product {
+            id
+            name
+            categories {
+              category {
+                id
+                name
+              }
+            }
+          }
+        }
         service {
           id
           name
