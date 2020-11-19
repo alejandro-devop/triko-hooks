@@ -28,7 +28,7 @@ const useRegionConfig = () => {
     defaultSearchDistance,
   } = general;
   const {place2payUrl, paymentContactEmail} = placetopay;
-  const {maximumRate, minimumRate, rateStep} = rate;
+  const {maximumRate, minimumRate, rateStep, minimumMoneyStep = 50} = rate;
 
   const appConfigs = {
     availableCountries: ['CO', 'US'],
@@ -42,6 +42,7 @@ const useRegionConfig = () => {
     contactEmail,
     supportEmailSubject,
     minimumAnticipation: 60,
+    minimumMoneyStep,
     place2payUrl,
     paymentContactEmail,
     termsUrl,

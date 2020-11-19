@@ -4,6 +4,7 @@ import {GET_PENDING_REQUEST_CLIENT, GET_PENDING_REQUEST_TRIKO} from './queries';
 import {useMemo} from 'react';
 import useRegionConfig from 'shared/hooks/use-regional-config';
 import {STATUS_CANCEL} from 'config/request-statuses';
+import {startedStatuses} from 'shared/hooks/use-request-status';
 
 export const TYPE_REQUEST = 1;
 export const TYPE_EMERGENCY = 2;
@@ -18,8 +19,10 @@ export const WORKFLOWS_MAP = {
   onYourDoor: 25,
 };
 
-const getType = ({onlyFavors}) => {
-  if (onlyFavors) {
+const getType = ({allTypes, onlyFavors}) => {
+  if (allTypes) {
+    return null;
+  } else if (onlyFavors) {
     return TYPE_BAG;
   }
   return TYPE_REQUEST;
@@ -27,8 +30,10 @@ const getType = ({onlyFavors}) => {
 
 const useRequestList = (options = {}) => {
   const {
+    allTypes,
     onlyFavors,
     isTriko,
+    noRunning,
     onlyCurrentDay,
     onlyMyServices,
     noCanceled,
@@ -84,7 +89,13 @@ const useRequestList = (options = {}) => {
       if (noCanceled && workflow === STATUS_CANCEL) {
         return false;
       }
-      return !onlyFavors ? !included : included;
+      if (noRunning && startedStatuses.includes(workflow)) {
+        return false;
+      }
+      if (onlyFavors) {
+        return included;
+      }
+      return true;
     });
     return requestsList;
   }, [data, onlyFavors]);

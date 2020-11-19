@@ -212,6 +212,7 @@ export const GET_PENDING_REQUEST_TRIKO = gql`
           product {
             id
             name
+            attrs
             categories {
               category {
                 id
