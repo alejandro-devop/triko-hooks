@@ -5,6 +5,7 @@ import {useMemo} from 'react';
 import useRegionConfig from 'shared/hooks/use-regional-config';
 import {STATUS_CANCEL} from 'config/request-statuses';
 import {startedStatuses} from 'shared/hooks/use-request-status';
+import {isEmpty} from 'shared/utils/functions';
 
 export const TYPE_REQUEST = 1;
 export const TYPE_EMERGENCY = 2;
@@ -78,7 +79,7 @@ const useRequestList = (options = {}) => {
       const [detail = []] = item.details;
       const {service} = detail;
       const included = trikoFavorIds.includes(service.type.id);
-      const {workflow} = item.transition;
+      const {workflow} = !isEmpty(item.transition) ? item.transition : {};
       const attributes = item.attributes ? JSON.parse(item.attributes) : {};
       const isFinished =
         (isTriko && attributes.terminatedTriko) ||
