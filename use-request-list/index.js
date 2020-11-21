@@ -6,19 +6,10 @@ import useRegionConfig from 'shared/hooks/use-regional-config';
 import {STATUS_CANCEL} from 'config/request-statuses';
 import {startedStatuses} from 'shared/hooks/use-request-status';
 import {isEmpty} from 'shared/utils/functions';
-
+import {WORKFLOWS_MAP} from 'shared/commons/constants';
 export const TYPE_REQUEST = 1;
 export const TYPE_EMERGENCY = 2;
 export const TYPE_BAG = 3;
-export const WORKFLOWS_MAP = {
-  pending: 21,
-  approved: 19,
-  rejected: 20,
-  accepted: 22,
-  payment: 23,
-  onMyWay: 24,
-  onYourDoor: 25,
-};
 
 const getType = ({allTypes, onlyFavors}) => {
   if (allTypes) {
