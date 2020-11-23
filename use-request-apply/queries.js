@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 export const POSTULATE_TO_SERVICE = gql`
   mutation applyToService(
+    $accepted: Boolean
     $request: Int
     $triko: Int
     $rejected: Boolean
@@ -12,6 +13,7 @@ export const POSTULATE_TO_SERVICE = gql`
       triko_id: $triko
       rejected: $rejected
       locale: $locale
+      acepted: $accepted
     ) {
       id
       triko {

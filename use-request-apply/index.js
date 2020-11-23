@@ -22,11 +22,12 @@ const useServicePostulate = (request = {}) => {
   const {error} = useNotify();
 
   const applyToService = async (payload = {}) => {
-    const {rejected, triko = {}, rate} = payload;
+    const {rejected, accepted, triko = {}, rate} = payload;
     setLoading(true);
     try {
       await sendRequest({
         variables: {
+          accepted,
           request: request.id,
           rejected,
           triko: triko.id,
