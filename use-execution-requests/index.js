@@ -3,17 +3,23 @@ import {GET_EXECUTION_REQUESTS} from './queries';
 import {useSession} from 'hooks/index';
 import {WORKFLOWS_MAP} from 'shared/commons/constants';
 
-const useExecutionRequest = () => {
+const SHOPPER_WORKFLOWS = {
+  shopping: 45,
+};
+
+const useExecutionRequest = (options = {}) => {
+  const {isShopper} = options;
   const {
     stack: {locale},
   } = useSession();
-
   const {loading, data = {}} = useQuery(GET_EXECUTION_REQUESTS, {
     variables: {
       pollInterval: 8000,
       variables: {
         locale,
-        workflow: WORKFLOWS_MAP.started,
+        workflow: isShopper
+          ? SHOPPER_WORKFLOWS.shopping
+          : WORKFLOWS_MAP.started,
       },
     },
   });

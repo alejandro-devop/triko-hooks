@@ -1,11 +1,17 @@
 import gql from 'graphql-tag';
 
 export const GET_PENDING_REQUEST_CLIENT = gql`
-  query getPendingRequests($client: Int, $triko: Int, $locale: String = "en") {
+  query getPendingRequests(
+    $client: Int
+    $triko: Int
+    $locale: String = "en"
+    $type: Int = 1
+  ) {
     response: servicesrequests(
       client_id: $client
       triko_id: $triko
       locale: $locale
+      service_request_type_id: $type
     ) {
       id
       address

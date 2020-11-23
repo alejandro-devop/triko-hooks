@@ -30,25 +30,8 @@ const useSendRequest = () => {
       triko = {},
     } = payload;
     try {
-      // const {data = {}} = await sendRequest({
-      //   variables: {
-      //     address,
-      //     attrs: JSON.stringify(attrs),
-      //     byHour,
-      //     client: client.id,
-      //     date,
-      //     duration,
-      //     lat: latitude,
-      //     lng: longitude,
-      //     services: JSON.stringify(services.map((item) => item.id)),
-      //     locale,
-      //     type,
-      //     triko: triko.id,
-      //   },
-      // });
-      console.log(
-        'Data: ',
-        JSON.stringify({
+      const {data = {}} = await sendRequest({
+        variables: {
           address,
           attrs: JSON.stringify(attrs),
           byHour,
@@ -57,14 +40,16 @@ const useSendRequest = () => {
           duration,
           lat: latitude,
           lng: longitude,
-          services: JSON.stringify(services.map((item) => item.id)),
+          services: JSON.stringify(
+            services.map((item) => ({service_id: item.id})),
+          ),
           locale,
           type,
           triko: triko.id,
-        }),
-      );
+        },
+      });
       setLoading(false);
-      // return data.response;
+      return data.response;
     } catch (e) {
       reportError(e);
       error('Error while sending the request');

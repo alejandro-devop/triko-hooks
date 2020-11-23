@@ -2,6 +2,7 @@ import {CALC_RATE} from './queries';
 import {useQuery} from '@apollo/react-hooks';
 import {useSession} from 'hooks/index';
 import useMyServices from 'shared/hooks/use-my-services';
+import {isEmpty} from 'shared/utils/functions';
 
 const useCalcTotal = (options = {}) => {
   const {
@@ -17,6 +18,7 @@ const useCalcTotal = (options = {}) => {
     transport,
     tip,
     services,
+    onCompleted,
   } = options;
   const {loading, data = {}} = useQuery(CALC_RATE, {
     fetchPolicy: 'no-cache',
@@ -31,9 +33,10 @@ const useCalcTotal = (options = {}) => {
       time,
       transport,
       tip,
-      triko: triko.id,
+      triko: !isEmpty(triko) && !isEmpty(triko.id) ? triko.id : '0',
       region: regionId,
     },
+    onCompleted,
   });
   const {services: calcServices = []} = data.response || {};
   const total = calcServices.reduce((accumulator, currentItem) => {
@@ -75,7 +78,7 @@ export const useCalcRate = (options = {}) => {
 };
 
 export const useCalcRateClient = (options = {}) => {
-  const {request = {}, byService = false} = options;
+  const {request = {}, byService = false, onCompleted} = options;
   const {
     details = [],
     application_date: date,
@@ -105,6 +108,7 @@ export const useCalcRateClient = (options = {}) => {
     transport,
     tip,
     services,
+    onCompleted,
   });
   return {
     loading,
