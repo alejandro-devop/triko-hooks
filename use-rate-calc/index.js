@@ -59,9 +59,9 @@ export const useCalcRate = (options = {}) => {
   const {
     stack: {myServices = []},
   } = useSession();
-  const serviceIds = request.details.map((item) =>
-    parseInt(item.service.id, 10),
-  );
+  const serviceIds = !isEmpty(request.details)
+    ? request.details.map((item) => parseInt(item.service.id, 10))
+    : [];
   const requestServices = myServices.filter((item) =>
     serviceIds.includes(parseInt(item.id, 10)),
   );
