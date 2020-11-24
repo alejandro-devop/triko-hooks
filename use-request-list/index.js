@@ -3,7 +3,7 @@ import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_PENDING_REQUEST_CLIENT, GET_PENDING_REQUEST_TRIKO} from './queries';
 import {useMemo} from 'react';
 import useRegionConfig from 'shared/hooks/use-regional-config';
-import {STATUS_CANCEL} from 'config/request-statuses';
+import {STATUS_CANCEL, STATUS_FINISHED} from 'config/request-statuses';
 import {startedStatuses} from 'shared/hooks/use-request-status';
 import {isEmpty} from 'shared/utils/functions';
 import {WORKFLOWS_MAP} from 'shared/commons/constants';
@@ -76,7 +76,7 @@ const useRequestList = (options = {}) => {
       const isFinished =
         (isTriko && attributes.terminatedTriko) ||
         (!isTriko && attributes.terminatedClient);
-      if (noFinished && isFinished) {
+      if (noFinished && (isFinished || workflow === STATUS_FINISHED)) {
         return false;
       }
       if (noCanceled && workflow === STATUS_CANCEL) {

@@ -4,14 +4,20 @@ import {
   STATUS_CONFIRM_FINISHED,
   STATUS_CONFIRM_START,
   STATUS_FINISHED,
+  STATUS_GOING_TO_SHOP,
+  STATUS_IN_THE_SHOP,
   STATUS_ON_MY_WAY,
   STATUS_ON_YOUR_DOOR,
+  STATUS_PAYING_CART,
+  STATUS_PAYING_ORDER,
   STATUS_PAYMENT,
   STATUS_PENDING,
   STATUS_QUALIFY,
   STATUS_QUALIFY_CLIENT,
   STATUS_QUALIFY_TRIKO,
+  STATUS_SHOPPING,
   STATUS_STARTED,
+  STATUS_WAITING_FOR_CLIENT,
   STATUS_WAITING_FOR_TRIKO,
 } from 'config/request-statuses';
 import useTranslation from 'hooks/useTranslation';
@@ -25,6 +31,10 @@ export const startedStatuses = [
   STATUS_QUALIFY_CLIENT,
   STATUS_QUALIFY_TRIKO,
   STATUS_FINISHED,
+  STATUS_GOING_TO_SHOP,
+  STATUS_IN_THE_SHOP,
+  STATUS_SHOPPING,
+  STATUS_PAYING_ORDER,
 ];
 
 export const acceptedStatuses = [
@@ -80,6 +90,16 @@ const useRequestStatus = (workflow, detailed, paidOut) => {
         return 'services_status_label_cancel';
       case STATUS_WAITING_FOR_TRIKO:
         return 'services_status_label_waiting_for_triko';
+      case STATUS_GOING_TO_SHOP:
+        return 'services_status_going_to_shopping_place';
+      case STATUS_IN_THE_SHOP:
+        return 'services_status_in_the_shop';
+      case STATUS_WAITING_FOR_CLIENT:
+        return 'services_status_waiting_for_client_confirmation';
+      case STATUS_PAYING_CART:
+        return 'services_status_paying_the_cart';
+      case STATUS_PAYING_ORDER:
+        return 'services_status_paying_the_order';
       default:
         return 'Unknown';
     }
