@@ -101,6 +101,8 @@ const useRequestStatus = (workflow, detailed, paidOut) => {
         return 'services_status_paying_the_cart';
       case STATUS_PAYING_ORDER:
         return 'services_status_paying_the_order';
+      case STATUS_SHOPPING:
+        return 'services_status_shopping';
       default:
         return 'Unknown';
     }
