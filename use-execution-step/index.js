@@ -72,7 +72,9 @@ const taskExecution = (workflow) => {
     return 1;
   } else if (contains([STATUS_STARTED], workflow)) {
     return 2;
-  } else if (contains([STATUS_CONFIRM_FINISHED], workflow)) {
+  } else if (
+    contains([STATUS_CONFIRM_FINISHED, STATUS_QUALIFY_CLIENT], workflow)
+  ) {
     return 3;
   } else {
     return 0;
