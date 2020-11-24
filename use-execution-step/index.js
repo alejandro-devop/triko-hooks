@@ -66,6 +66,19 @@ const shopperExecution = (workflow) => {
   }
 };
 
+const taskExecution = (workflow) => {
+  console.log('the: workflow: ', workflow);
+  if (contains([STATUS_ON_YOUR_DOOR, STATUS_CONFIRM_START], workflow)) {
+    return 1;
+  } else if (contains([STATUS_STARTED], workflow)) {
+    return 2;
+  } else if (contains([STATUS_CONFIRM_FINISHED], workflow)) {
+    return 3;
+  } else {
+    return 0;
+  }
+};
+
 const useExecutionStep = (request = {}, options = {}) => {
   const {isShopper, isCourier, isTask} = options;
   const {transition = {}} = request;
@@ -74,6 +87,7 @@ const useExecutionStep = (request = {}, options = {}) => {
     return shopperExecution(workflow);
   } else if (isCourier) {
   } else if (isTask) {
+    return taskExecution(workflow);
   } else {
     return normalExecution(workflow);
   }
