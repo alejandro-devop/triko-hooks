@@ -36,6 +36,7 @@ export const startedStatuses = [
   STATUS_SHOPPING,
   STATUS_ON_GOING,
   STATUS_PAYING_ORDER,
+  STATUS_PAYING_CART,
 ];
 
 export const acceptedStatuses = [

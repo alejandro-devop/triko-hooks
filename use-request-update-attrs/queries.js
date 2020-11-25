@@ -11,6 +11,7 @@ export const UPDATE_REQUEST_ATTRS = gql`
     $date: String
     $attrs: String
     $locale: String = "en"
+    $image: String
   ) {
     response: servicerequestupdate(
       service_request_id: $request
@@ -22,6 +23,7 @@ export const UPDATE_REQUEST_ATTRS = gql`
       application_date: $date
       attrs: $attrs
       locale: $locale
+      image: $image
     ) {
       id
     }

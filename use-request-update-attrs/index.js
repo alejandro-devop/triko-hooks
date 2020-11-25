@@ -16,7 +16,7 @@ const useRequestUpdateAttrs = (request) => {
   });
   const updateRequest = async (payload = {}, requestOverride) => {
     setLoading(true);
-    const {attrs = {}} = payload;
+    const {attrs = {}, image} = payload;
     const {longitude, latitude} = (!isEmpty(requestOverride)
       ? requestOverride
       : request
@@ -31,6 +31,7 @@ const useRequestUpdateAttrs = (request) => {
           latitude,
           locale,
           attrs: JSON.stringify(attrs),
+          image: !isEmpty(image) ? JSON.stringify(image) : null,
         },
       });
       setLoading(false);

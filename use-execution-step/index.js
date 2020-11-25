@@ -67,7 +67,6 @@ const shopperExecution = (workflow) => {
 };
 
 const taskExecution = (workflow) => {
-  console.log('the: workflow: ', workflow);
   if (contains([STATUS_ON_YOUR_DOOR, STATUS_CONFIRM_START], workflow)) {
     return 1;
   } else if (contains([STATUS_STARTED], workflow)) {

@@ -41,6 +41,7 @@ const useRequestList = (options = {}) => {
     type: getType(options),
     locale,
   };
+
   if (onlyFavors) {
     delete variables.triko;
     delete variables.client;
