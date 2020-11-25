@@ -15,6 +15,7 @@ const useTrikoCredits = () => {
       client: !isEmpty(client) ? client.id : null,
     },
   });
+
   const info = !isEmpty(data.response) ? data.response : {};
   return {
     loading,

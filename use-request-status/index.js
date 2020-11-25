@@ -5,7 +5,8 @@ import {
   STATUS_CONFIRM_START,
   STATUS_FINISHED,
   STATUS_GOING_TO_SHOP,
-  STATUS_IN_THE_SHOP, STATUS_ON_GOING,
+  STATUS_IN_THE_SHOP,
+  STATUS_ON_GOING,
   STATUS_ON_MY_WAY,
   STATUS_ON_YOUR_DOOR,
   STATUS_PAYING_CART,
@@ -104,6 +105,8 @@ const useRequestStatus = (workflow, detailed, paidOut) => {
         return 'services_status_paying_the_order';
       case STATUS_SHOPPING:
         return 'services_status_shopping';
+      case STATUS_ON_GOING:
+        return 'services_status_ongoing';
       default:
         return 'Unknown';
     }
