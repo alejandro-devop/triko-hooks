@@ -1,5 +1,5 @@
 import useSession from 'hooks/useSession';
-
+import {APP_CODE} from 'react-native-dotenv';
 /**
  * This hook returns the application regional configuration.
  * @author Alejandro <alejandro.devop@gmail.com>
@@ -10,10 +10,27 @@ const useRegionConfig = () => {
   const {
     stack: {regionalConfig},
   } = useSession();
-  const {payments = {}, rate = {}, support = {}, general = {}, application} =
-    regionalConfig || {};
+  const {
+    payments = {},
+    rate = {},
+    support = {},
+    general = {},
+    applications = {},
+  } = regionalConfig || {};
+  const {triko = {}, client = {}} = applications;
+
+  const getApplicationConfig = () => {
+    if (APP_CODE === 'CLS') {
+      return client;
+    } else if (APP_CODE === 'TKR') {
+      return triko;
+    } else {
+      return {};
+    }
+  };
+
   const {placetopay = {}} = payments || {};
-  const {version: appVersion = '1.0.3'} = application || {};
+  const {version: appVersion = '1.0.3'} = getApplicationConfig();
   const shopperMinimumRate = 10000;
   const {
     contactEmail,
