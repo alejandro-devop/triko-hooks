@@ -1,4 +1,9 @@
-import {useNavigation, StackActions} from '@react-navigation/native';
+import {useCallback, useState} from 'react';
+import {
+  useFocusEffect,
+  useNavigation,
+  StackActions,
+} from '@react-navigation/native';
 
 // const prepareStack = (paths = []) => {
 //   const actions = paths.map(path =>
@@ -17,7 +22,15 @@ import {useNavigation, StackActions} from '@react-navigation/native';
  */
 const useNavigate = () => {
   const navigation = useNavigation();
+  const [canGoBack, setCanGoBack] = useState(false);
+  useFocusEffect(
+    useCallback(() => {
+      setCanGoBack(navigation.canGoBack());
+      return () => {};
+    }, []),
+  );
   return {
+    canGoBack,
     navigation,
     redirectTo: (path, params) => {
       navigation.dispatch(StackActions.replace(path, params));
