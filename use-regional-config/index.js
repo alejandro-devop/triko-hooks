@@ -10,9 +10,10 @@ const useRegionConfig = () => {
   const {
     stack: {regionalConfig},
   } = useSession();
-  const {payments = {}, rate = {}, support = {}, general = {}} =
+  const {payments = {}, rate = {}, support = {}, general = {}, application} =
     regionalConfig || {};
   const {placetopay = {}} = payments || {};
+  const {version: appVersion = '1.0.3'} = application || {};
   const shopperMinimumRate = 10000;
   const {
     contactEmail,
@@ -31,6 +32,7 @@ const useRegionConfig = () => {
   const {maximumRate, minimumRate, rateStep, minimumMoneyStep = 50} = rate;
 
   const appConfigs = {
+    appVersion,
     availableCountries: ['CO', 'US'],
     dayStartsAt,
     dayEndsAt,
