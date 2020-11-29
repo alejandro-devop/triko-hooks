@@ -17,12 +17,9 @@ const useLocationObserver = (options = {}) => {
   let observerId = null;
 
   const initialize = async () => {
-    console.clear();
-    console.log('Initializing watcher!');
     setInitialized(true);
     observerId = Geolocation.watchPosition(
       ({coords: {latitude, longitude}}) => {
-        console.log('The location change! ', latitude, longitude);
         setLocation({
           latitude,
           longitude,
