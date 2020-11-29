@@ -20,6 +20,7 @@ import {
   STATUS_STARTED,
   STATUS_WAITING_FOR_CLIENT,
   STATUS_WAITING_FOR_TRIKO,
+  STATUS_CONFIRM_PAYMENT,
 } from 'config/request-statuses';
 import useTranslation from 'hooks/useTranslation';
 
@@ -107,6 +108,8 @@ const useRequestStatus = (workflow, detailed, paidOut) => {
         return 'services_status_shopping';
       case STATUS_ON_GOING:
         return 'services_status_ongoing';
+      case STATUS_CONFIRM_PAYMENT:
+        return 'services_status_confirm_payment';
       default:
         return 'Unknown';
     }
