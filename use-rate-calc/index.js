@@ -36,14 +36,23 @@ const useCalcTotal = (options = {}) => {
       triko: !isEmpty(triko) && !isEmpty(triko.id) ? triko.id : '0',
       region: regionId,
     },
-    onCompleted,
+    onCompleted: ({response = {}}) => {
+      const requestServices = response.services;
+      const requestTotal = calcTotal(requestServices);
+      if (onCompleted) {
+        onCompleted(requestTotal);
+      }
+    },
   });
+  const calcTotal = (requestServices = []) =>
+    requestServices.reduce((accumulator, currentItem) => {
+      const {Total} = currentItem.detail || {};
+      accumulator += Total;
+      return accumulator;
+    }, 0);
+
   const {services: calcServices = []} = data.response || {};
-  const total = calcServices.reduce((accumulator, currentItem) => {
-    const {Total} = currentItem.detail || {};
-    accumulator += Total;
-    return accumulator;
-  }, 0);
+  const total = calcTotal(calcServices);
   return {loading, total};
 };
 

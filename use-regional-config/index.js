@@ -46,7 +46,13 @@ const useRegionConfig = () => {
     defaultSearchDistance,
   } = general;
   const {place2payUrl, paymentContactEmail} = placetopay;
-  const {maximumRate, minimumRate, rateStep, minimumMoneyStep = 50} = rate;
+  const {
+    maximumRate,
+    minimumRate,
+    rateStep,
+    minimumIncentiveStep = 100,
+    minimumMoneyStep = 50,
+  } = rate;
 
   const appConfigs = {
     appVersion,
@@ -56,6 +62,7 @@ const useRegionConfig = () => {
     rateStep,
     minimumRate: minimumRate,
     maximumRate: maximumRate,
+    minimumIncentiveStep,
     contactWhatsApp,
     whatsappMessage,
     contactEmail,
