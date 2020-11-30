@@ -42,7 +42,6 @@ export const startedStatuses = [
 ];
 
 export const acceptedStatuses = [
-  STATUS_ACCEPTED,
   STATUS_CONFIRM_START,
   STATUS_ON_MY_WAY,
   STATUS_ON_YOUR_DOOR,
