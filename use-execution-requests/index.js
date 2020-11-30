@@ -13,14 +13,11 @@ const useExecutionRequest = (options = {}) => {
     stack: {locale},
   } = useSession();
   const {loading, data = {}} = useQuery(GET_EXECUTION_REQUESTS, {
+    fetchPolicy: 'no-cache',
+    pollInterval: 8000,
     variables: {
-      pollInterval: 8000,
-      variables: {
-        locale,
-        workflow: isShopper
-          ? SHOPPER_WORKFLOWS.shopping
-          : WORKFLOWS_MAP.started,
-      },
+      locale,
+      workflow: isShopper ? SHOPPER_WORKFLOWS.shopping : WORKFLOWS_MAP.started,
     },
   });
   const requests =

@@ -36,7 +36,7 @@ const useRequestUpdateAttrs = (request) => {
       });
       setLoading(false);
     } catch (e) {
-      reportError(e);
+      reportError(e, {code: 'TUA-000005'});
       setLoading(false);
     }
   };
