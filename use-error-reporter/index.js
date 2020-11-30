@@ -34,6 +34,7 @@ const useErrorReporter = (config = {}) => {
           code,
         }),
       });
+      console.log('Thrown error: ', errorInfo);
       // response.json();
     } catch (e) {
       console.log('Cannot get error');
