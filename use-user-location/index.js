@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {Platform} from 'react-native';
 import useNotify from 'hooks/useNotification';
 import Geolocation from '@react-native-community/geolocation';
 import useErrorReporter from 'shared/hooks/use-error-reporter';
@@ -27,6 +28,13 @@ const useUserLocation = (options = {}) => {
     setLoading(true);
     try {
       if (Geolocation) {
+        const geoOptions = {
+          maximumAge: 0,
+          enableHighAccuracy: true,
+        };
+        if (Platform.OS === 'android') {
+          delete geoOptions.maximumAge;
+        }
         Geolocation.getCurrentPosition(
           async ({coords}) => {
             const {latitude: lat, longitude: lng} = coords;
@@ -36,10 +44,7 @@ const useUserLocation = (options = {}) => {
             setLocation({lat, lng});
           },
           () => {},
-          {
-            maximumAge: 0,
-            enableHighAccuracy: true,
-          },
+          geoOptions,
         );
       }
       setLoading(false);

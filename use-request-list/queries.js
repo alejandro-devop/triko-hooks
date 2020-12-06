@@ -206,6 +206,7 @@ export const GET_PENDING_REQUEST_TRIKO = gql`
       details: servicesrequestsdetails {
         id
         products {
+          description
           image {
             url_download_file
           }

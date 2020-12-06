@@ -41,7 +41,23 @@ const useHasPermissions = (options = {}) => {
     setAppPermissions(grantedPermissions);
   };
 
-  const checkAndroid = async () => {};
+  const checkAndroid = async () => {
+    const grantedPermissions = {};
+    const permissionStatuses = await Promise.all(
+      permissions.map(
+        async (permissionName) =>
+          await RNPermissions.check(ANDROID_PERMISSIONS[permissionName]),
+      ),
+    );
+    permissionStatuses.forEach((status, key) => {
+      let granted = false;
+      if (status === 'granted') {
+        granted = true;
+      }
+      grantedPermissions[permissions[key]] = granted;
+    });
+    setAppPermissions(grantedPermissions);
+  };
 
   const checkPermissions = async () => {
     if (Platform.OS === 'ios') {
