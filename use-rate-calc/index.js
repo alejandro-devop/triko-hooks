@@ -124,3 +124,45 @@ export const useCalcRateClient = (options = {}) => {
     total,
   };
 };
+
+export const useCalcRatePostulate = (options = {}) => {
+  const {request = {}, trikoId, rate = 0} = options;
+  const {
+    stack: {regionId},
+  } = useSession();
+  const {
+    attributes,
+    details = [],
+    duration = 1,
+    application_date: requestDate,
+    type = {},
+    transport = 0,
+  } = request;
+  const services = details.map((item) => item.service.id);
+  const {incentive = 0} = !isEmpty(attributes) ? JSON.parse(attributes) : {};
+  const {loading, data = {}} = useQuery(CALC_RATE, {
+    variables: {
+      byService: false,
+      services: JSON.stringify(services),
+      triko: trikoId,
+      region: regionId,
+      date: requestDate,
+      price: rate,
+      duration: parseInt(duration, 10),
+      type: type.id,
+      tip: parseFloat(incentive, 10),
+      transport: parseFloat(transport, 10),
+    },
+  });
+
+  const calcTotal = (requestServices = []) =>
+    requestServices.reduce((accumulator, currentItem) => {
+      const {Total} = currentItem.detail || {};
+      accumulator += Total;
+      return accumulator;
+    }, 0);
+
+  const {services: calcServices = []} = data.response || {};
+  const total = calcTotal(calcServices);
+  return {loading, total};
+};

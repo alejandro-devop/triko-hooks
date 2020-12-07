@@ -14,6 +14,7 @@ export const CALC_RATE = gql`
     $time: String
     $transport: Float
     $locale: String
+    $price: Int
     $tip: Float
   ) {
     response: calculaterate(
@@ -29,6 +30,7 @@ export const CALC_RATE = gql`
       time: $time
       transport: $transport
       locale: $locale
+      price: $price
       tip: $tip
     ) {
       id

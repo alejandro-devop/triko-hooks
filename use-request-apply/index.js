@@ -37,6 +37,15 @@ const useServicePostulate = (request = {}) => {
       let {applyRates = []} = requestAttr;
       if (rejected) {
         applyRates = applyRates.filter((item) => item.triko.id !== triko.id);
+      } else if (accepted) {
+        applyRates = [
+          {
+            triko: {
+              id: triko.id,
+            },
+            rate,
+          },
+        ];
       } else {
         applyRates.push({
           triko: {
