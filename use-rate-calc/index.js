@@ -141,6 +141,7 @@ export const useCalcRatePostulate = (options = {}) => {
   const services = details.map((item) => item.service.id);
   const {incentive = 0} = !isEmpty(attributes) ? JSON.parse(attributes) : {};
   const {loading, data = {}} = useQuery(CALC_RATE, {
+    fetchPolicy: 'no-cache',
     variables: {
       byService: false,
       services: JSON.stringify(services),
