@@ -5,14 +5,31 @@ import useNotify from 'hooks/useNotification';
 import useTranslation from 'hooks/useTranslation';
 
 const useErrorReporter = (config = {}) => {
+  const {stack = {}} = useSession();
   const {
-    stack: {user = {}},
-  } = useSession();
+    user = {},
+    locale,
+    region,
+    triko = {},
+    client = {},
+    countryCode,
+    regionId,
+    currentLocation,
+  } = stack;
   const {_t} = useTranslation();
   const {error} = useNotify();
   const userId = !isEmpty(user) ? user.id : 'none';
   const phone = !isEmpty(user) ? user.phonenumber : 'none';
-
+  const sessionToSend = {
+    locale,
+    region,
+    triko: !isEmpty(triko) ? triko.id : null,
+    client: !isEmpty(client) ? client.id : null,
+    user: !isEmpty(user) ? user.id : null,
+    countryCode,
+    regionId,
+    currentLocation: !isEmpty(currentLocation) ? currentLocation : null,
+  };
   const {path} = config;
   return async (errorInfo = {}, messageOptions = {}) => {
     const {message, code} = messageOptions;
@@ -29,6 +46,7 @@ const useErrorReporter = (config = {}) => {
           application: APP_CODE,
           file: path,
           error: errorInfo.message,
+          session: JSON.stringify(sessionToSend),
           user: userId,
           phone: phone,
           code,
