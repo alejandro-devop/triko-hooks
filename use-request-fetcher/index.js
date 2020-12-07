@@ -1,8 +1,9 @@
 import {useQuery} from '@apollo/react-hooks';
 import {GET_REQUEST} from './queries';
 import {useSession} from 'hooks/index';
+import {isEmpty} from 'shared/utils/functions';
 
-export const useRequestFetcher = ({requestId}) => {
+export const useRequestFetcher = ({requestId, onComplete}) => {
   const {
     stack: {locale},
   } = useSession();
@@ -13,7 +14,13 @@ export const useRequestFetcher = ({requestId}) => {
       id: requestId,
       locale,
     },
-    onCompleted: () => {},
+    onCompleted: ({response = {}}) => {
+      if (onComplete) {
+        const [request = {}] =
+          !isEmpty(response) && Array.isArray(response) ? response : [];
+        onComplete(request);
+      }
+    },
   });
   const refresh = async () => {
     try {

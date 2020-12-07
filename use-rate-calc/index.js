@@ -155,7 +155,6 @@ export const useCalcRatePostulate = (options = {}) => {
       transport: parseFloat(transport, 10),
     },
   });
-
   const calcTotal = (requestServices = []) =>
     requestServices.reduce((accumulator, currentItem) => {
       const {Total} = currentItem.detail || {};
