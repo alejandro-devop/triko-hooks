@@ -44,7 +44,7 @@ export const useRegisterFinish = () => {
       }
       setLoading(false);
     } catch (e) {
-      reportError(e);
+      reportError(e, {code: 'TK-000004'});
       error('Error while updating the user workflow');
       setLoading(false);
     }
