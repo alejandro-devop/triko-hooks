@@ -44,7 +44,6 @@ const useRequestList = (options = {}) => {
 
   if (onlyFavors) {
     delete variables.triko;
-    delete variables.client;
     const {latitude, longitude} = currentLocation;
     variables.nearest = JSON.stringify({
       longitude,
