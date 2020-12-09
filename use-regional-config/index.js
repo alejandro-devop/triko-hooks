@@ -31,7 +31,6 @@ const useRegionConfig = () => {
 
   const {placetopay = {}} = payments || {};
   const {version: appVersion = '1.0.3'} = getApplicationConfig();
-  const shopperMinimumRate = 10000;
   const {
     contactEmail,
     supportEmailSubject,
@@ -55,6 +54,9 @@ const useRegionConfig = () => {
     rateStep,
     minimumIncentiveStep = 100,
     minimumMoneyStep = 50,
+    shopperMinimumRate = 10000,
+    taskMinimumRate = 10000,
+    courierMinimumRate = 10000,
   } = rate;
 
   const appConfigs = {
@@ -83,6 +85,8 @@ const useRegionConfig = () => {
     trikoFavorIds: trikoFavorIds || [11, 22],
     defaultSearchDistance: defaultSearchDistance || 20,
     shopperMinimumRate,
+    taskMinimumRate,
+    courierMinimumRate,
   };
   return appConfigs;
 };
