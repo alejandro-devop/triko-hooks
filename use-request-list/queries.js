@@ -81,10 +81,12 @@ export const GET_PENDING_REQUEST_CLIENT = gql`
           id
           name
           icon
+          attrs
           type: servicetype {
             id
             name
             icon
+            attrs
           }
         }
       }
@@ -169,11 +171,16 @@ export const GET_PENDING_REQUEST_TRIKO = gql`
       attributes
       history {
         id
-        transition
+        transitionStep: transition
         workflow: workflowtransition {
           name: workflow
         }
+        transition: workflowtransition {
+          workflow
+        }
         date: created_at
+        created_at
+        user: user_id
       }
       type: servicerequesttype {
         id
