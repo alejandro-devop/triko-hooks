@@ -92,7 +92,7 @@ export const useCalcRateClient = (options = {}) => {
     details = [],
     application_date: date,
     duration,
-    byHour,
+    byHour = true,
     time,
     type = {},
     distance,
