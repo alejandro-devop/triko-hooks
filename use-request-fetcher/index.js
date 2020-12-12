@@ -9,7 +9,7 @@ export const useRequestFetcher = ({requestId, onComplete}) => {
   } = useSession();
   const {loading, refetch, data = {}} = useQuery(GET_REQUEST, {
     fetchPolicy: 'no-cache',
-    pollInterval: 5000,
+    pollInterval: 10000,
     variables: {
       id: requestId,
       locale,
