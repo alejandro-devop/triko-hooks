@@ -25,6 +25,7 @@ export const GET_PENDING_REQUEST_CLIENT = gql`
           name: workflow
         }
         date: created_at
+        created_at
       }
       type: servicerequesttype {
         id
