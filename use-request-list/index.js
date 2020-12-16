@@ -71,7 +71,6 @@ const useRequestList = (options = {}) => {
       variables,
     },
   );
-
   const requests = useMemo(() => {
     let requestsList = data.response ? data.response : [];
     requestsList = requestsList.filter((item) => {

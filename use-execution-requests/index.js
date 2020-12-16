@@ -8,7 +8,6 @@ const SHOPPER_WORKFLOWS = {
 };
 
 const useExecutionRequest = (options = {}) => {
-  const {isShopper} = options;
   const {
     stack: {locale},
   } = useSession();
@@ -17,7 +16,10 @@ const useExecutionRequest = (options = {}) => {
     pollInterval: 8000,
     variables: {
       locale,
-      workflow: isShopper ? SHOPPER_WORKFLOWS.shopping : WORKFLOWS_MAP.started,
+      workflow: JSON.stringify([
+        SHOPPER_WORKFLOWS.shopping,
+        WORKFLOWS_MAP.started,
+      ]),
     },
   });
   const requests =

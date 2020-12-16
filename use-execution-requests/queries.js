@@ -6,7 +6,7 @@ export const GET_EXECUTION_REQUESTS = gql`
     $client: Int
     $triko: Int
     $locale: String = "en"
-    $workflow: Int
+    $workflow: String
   ) {
     response: servicesrequests(
       id: $id
