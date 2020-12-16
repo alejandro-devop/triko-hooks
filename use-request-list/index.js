@@ -1,7 +1,7 @@
+import {useMemo, useState} from 'react';
 import useSession from 'shared/hooks/use-session-triko';
-import {useLazyQuery} from '@apollo/react-hooks';
+import {useLazyQuery, useQuery} from '@apollo/react-hooks';
 import {GET_PENDING_REQUEST_CLIENT, GET_PENDING_REQUEST_TRIKO} from './queries';
-import {useMemo} from 'react';
 import useRegionConfig from 'shared/hooks/use-regional-config';
 import {STATUS_CANCEL, STATUS_FINISHED} from 'config/request-statuses';
 import {startedStatuses} from 'shared/hooks/use-request-status';
@@ -33,16 +33,23 @@ const useRequestList = (options = {}) => {
     onlyPending,
   } = options;
   const {
-    stack: {client = {}, triko = {}, locale, currentLocation = {}},
+    stack: {
+      client = {},
+      triko = {},
+      locale,
+      currentLocation: userLocation = {},
+    },
   } = useSession();
-  const {trikoFavorIds = [], defaultSearchDistance = 20} = useRegionConfig();
+  const [currentLocation] = useState(userLocation);
+  const {trikoFavorIds = [], defaultSearchDistance = 2} = useRegionConfig();
   const variables = {
     ...(isTriko ? {triko: triko.id} : {client: client.id}),
     type: getType(options),
     locale,
+    workflow: [],
   };
 
-  if (onlyFavors) {
+  if (onlyFavors && !isEmpty(currentLocation)) {
     delete variables.triko;
     const {latitude, longitude} = currentLocation;
     variables.nearest = JSON.stringify({
@@ -53,9 +60,9 @@ const useRequestList = (options = {}) => {
   }
 
   if (onlyPending) {
-    variables.workflow = WORKFLOWS_MAP.pending;
+    variables.workflow.push(WORKFLOWS_MAP.pending);
   }
-
+  variables.workflow = JSON.stringify(variables.workflow);
   const [getPendingRequests, {data = {}, loading}] = useLazyQuery(
     isTriko ? GET_PENDING_REQUEST_TRIKO : GET_PENDING_REQUEST_CLIENT,
     {

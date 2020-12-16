@@ -6,12 +6,14 @@ export const GET_PENDING_REQUEST_CLIENT = gql`
     $triko: Int
     $locale: String = "en"
     $type: Int = 1
+    $workflow: String
   ) {
     response: servicesrequests(
       client_id: $client
       triko_id: $triko
       locale: $locale
       service_request_type_id: $type
+      workflow_transition_id: $workflow
     ) {
       id
       address
@@ -154,7 +156,7 @@ export const GET_PENDING_REQUEST_TRIKO = gql`
     $nearest: String
     $locale: String = "en"
     $type: Int = 1
-    $workflow: Int
+    $workflow: String
   ) {
     response: servicesrequests(
       client_id: $client
