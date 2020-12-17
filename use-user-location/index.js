@@ -37,6 +37,7 @@ const useUserLocation = (options = {}) => {
         };
         if (Platform.OS === 'android') {
           delete geoOptions.maximumAge;
+          delete geoOptions.enableHighAccuracy;
         }
 
         Geolocation.getCurrentPosition(
