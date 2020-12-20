@@ -57,6 +57,7 @@ const useServicePostulate = (request = {}) => {
       await updateAttrs({
         attrs: {
           applyRates,
+          favorRate: rate,
         },
       });
       setLoading(false);

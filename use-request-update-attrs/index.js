@@ -16,7 +16,7 @@ const useRequestUpdateAttrs = (request) => {
   });
   const updateRequest = async (payload = {}, requestOverride) => {
     setLoading(true);
-    const {attrs = {}, image} = payload;
+    const {attrs = {}, image, scheduleDate} = payload;
     const {longitude, latitude} = (!isEmpty(requestOverride)
       ? requestOverride
       : request
@@ -24,6 +24,7 @@ const useRequestUpdateAttrs = (request) => {
     try {
       await sendRequest({
         variables: {
+          date: scheduleDate,
           request: (!isEmpty(requestOverride) ? requestOverride : request).id,
           duration: (!isEmpty(requestOverride) ? requestOverride : request)
             .duration,
