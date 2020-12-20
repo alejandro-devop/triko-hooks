@@ -35,6 +35,14 @@ export const GET_REGION_CONFIG = gql`
         whatsappMessage
         termsUrl
       }
+      general: generalconfiguration {
+        events: eventconfiguration {
+          interval: eventinterval
+        }
+        search: searchparameters {
+          radius
+        }
+      }
     }
   }
 `;

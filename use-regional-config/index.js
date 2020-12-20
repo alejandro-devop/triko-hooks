@@ -1,10 +1,11 @@
 import useSession from 'hooks/useSession';
 import {APP_CODE} from 'react-native-dotenv';
+
 /**
  * This hook returns the application regional configuration.
  * @author Alejandro <alejandro.devop@gmail.com>
  * @version 1.0.0
- * @returns {{contactEmail: *, rateStep: *, place2payUrl: *, welcomeVideo: string, whatsappMessage: *, termsUrl: *, minimumAnticipation: number, maximumRate: *, supportEmailSubject: *, minimumRate: *, paymentContactEmail: *, landingUrl: string, availableCountries: [string, string], contactWhatsApp: *}}
+ * @returns {{appVersion: *, defaultSearchDistance: *, place2payUrl: *, welcomeVideo: string, minimumScheduleAnticipation: *, minimumAnticipation: number, courierMinimumRate: *, maximumRate: *, minimumRate: *, shopperIds: *, taskMinimumRate: *, dayEndsAt: *, landingUrl: string, minimumMoneyStep: *, contactEmail: *, bankInfoDocs: *, rateStep: *, trikoFavorIds: number[], minimumIncentiveStep: *, docsForShopper: *, whatsappMessage: *, termsUrl: *, supportEmailSubject: *, shopperMinimumRate: *, dayStartsAt: *, paymentContactEmail: *, availableCountries: [string, string], contactWhatsApp: *}}
  */
 const useRegionConfig = () => {
   const {
@@ -42,11 +43,15 @@ const useRegionConfig = () => {
     dayStartsAt = '04:00:00 am',
     dayEndsAt = '11:59:59 pm',
     trikoFavorIds,
-    defaultSearchDistance,
     bankInfoDocs = [9],
     docsForShopper = [13, 12],
     shopperIds = [39, 80],
+    events = {},
+    search = {},
+    requests = {},
   } = general;
+  const {minimumScheduleAnticipation = 30} = requests;
+  const {radius = '20'} = search;
   const {place2payUrl, paymentContactEmail} = placetopay;
   const {
     maximumRate,
@@ -73,6 +78,7 @@ const useRegionConfig = () => {
     contactEmail,
     supportEmailSubject,
     minimumAnticipation: 60,
+    minimumScheduleAnticipation,
     minimumMoneyStep,
     place2payUrl,
     bankInfoDocs,
@@ -83,7 +89,7 @@ const useRegionConfig = () => {
     docsForShopper,
     shopperIds,
     trikoFavorIds: trikoFavorIds || [11, 22],
-    defaultSearchDistance: defaultSearchDistance || 20,
+    defaultSearchDistance: parseFloat(radius),
     shopperMinimumRate,
     taskMinimumRate,
     courierMinimumRate,
