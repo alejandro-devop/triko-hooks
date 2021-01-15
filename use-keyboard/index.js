@@ -8,11 +8,14 @@ const useKeyboard = () => {
   const [keyboardVisible, setVisible] = useState(false);
   const [keyBoardHeight, setKeyboardHeight] = useState(0);
   useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(EVENT__DID_SHOW, e => {
-      const {endCoordinates = {}} = e;
-      setKeyboardHeight(endCoordinates.height);
-      setVisible(true);
-    });
+    const keyboardDidShowListener = Keyboard.addListener(
+      EVENT__DID_SHOW,
+      (e) => {
+        const {endCoordinates = {}} = e;
+        setKeyboardHeight(endCoordinates.height);
+        setVisible(true);
+      },
+    );
     const keyboardDidHideListener = Keyboard.addListener(
       EVENT__DID_HIDE,
       () => {
