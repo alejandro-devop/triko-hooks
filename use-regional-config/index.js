@@ -42,6 +42,7 @@ const useRegionConfig = () => {
   const {
     dayStartsAt = '04:00:00 am',
     dayEndsAt = '11:59:59 pm',
+    shareIncentive = 1000,
     trikoFavorIds,
     bankInfoDocs = [9],
     docsForShopper = [13, 12],
@@ -87,6 +88,7 @@ const useRegionConfig = () => {
     welcomeVideo: '3O8C2d9e4i0', // Deprecated
     landingUrl: 'https://triko.co',
     docsForShopper,
+    shareIncentive,
     shopperIds,
     trikoFavorIds: trikoFavorIds || [11, 22],
     defaultSearchDistance: parseFloat(radius),

@@ -66,7 +66,7 @@ const useSession = (callBack) => {
         phonenumber,
         attrs: userAttrs,
       };
-      const generalKeys = {
+      const sessionKeys = {
         logged: true,
         token,
         client,
@@ -74,13 +74,12 @@ const useSession = (callBack) => {
         regionId: region.id,
         recovering: null,
         myAddresses: client.addresses || {},
+        user: userKeys,
+        clientId: client.id,
       };
-      await SessionService.writeAll(generalKeys);
-      await SessionService.write('user', userKeys);
-      await SessionService.write('clientId', client.id);
-      dispatch(setAllSession(generalKeys));
-      dispatch(setSession('user', userKeys));
-      dispatch(setSession('clientId', client.id));
+      await SessionService.writeAll(sessionKeys);
+      await dispatch(setAllSession(sessionKeys));
+      return sessionKeys;
     },
   };
 };

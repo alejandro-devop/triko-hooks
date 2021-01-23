@@ -3,6 +3,7 @@ import {UPDATE_USER} from './queries';
 import useNotify from 'hooks/useNotification';
 import useTranslation from 'hooks/useTranslation';
 import useSession from 'hooks/useSession';
+import {isEmpty} from 'shared/utils/functions';
 
 /**
  * This hook allows to update the user information, it updates the
@@ -24,26 +25,27 @@ const useUserUpdate = () => {
    * and other user attributes
    * TODO: receive other user params
    * @param attrs
+   * @param overrideUser
+   * @param defaultAttrs
    * @returns {Promise<void>}
    */
-  const updateUser = async ({attrs = {}}) => {
+  const updateUser = async ({overrideUser, defaultAttrs = {}, attrs = {}}) => {
     try {
       const newAttrs = {
-        ...user.attrs,
+        ...defaultAttrs,
+        ...(!isEmpty(overrideUser) ? overrideUser : user).attrs,
         ...attrs,
       };
-
       // Then, send the request to the api.
       await sendUpdate({
         variables: {
-          id: user.id,
+          id: (!isEmpty(overrideUser) ? overrideUser : user).id,
           attrs: JSON.stringify(newAttrs),
         },
       });
-
       // First, update the user attrs in session.
       setKey('user', {
-        ...user,
+        ...(!isEmpty(overrideUser) ? overrideUser : user),
         attrs: newAttrs,
       });
     } catch (e) {

@@ -16,6 +16,14 @@ const getInitialState = (permissions) =>
     return accumulator;
   }, {});
 
+/**
+ * Allows to check if the user has a specific set of permissions, it also allows to trigger the
+ * permission request
+ * @version 1.0.0
+ * @author Alejandro <alejandro.devop@gmail.com>
+ * @param options
+ * @returns {{appPermissions: *, reCheck: *}}
+ */
 const useHasPermissions = (options = {}) => {
   const {permissions = []} = options;
 
