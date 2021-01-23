@@ -8,10 +8,10 @@ export const ADD_FAVORITE = gql`
     $remove: Boolean
     $locale: String = "es"
   ) {
-    response: trikoFavorite(
-      triko_id: $triko
-      triko_favorite_id: $id
-      client_favorite_id: $client
+    response: clientFavorite(
+      client_id: $client
+      triko_favorite_id: $triko
+      client_favorite_id: $id
       remove: $remove
       locale: $locale
     ) {

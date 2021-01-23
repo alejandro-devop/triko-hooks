@@ -29,7 +29,7 @@ const useAddFavorite = () => {
   const sendRequest = async (trikoId, remove) => {
     try {
       setLoading(true);
-      const {data = {}} = await callMutation({
+      await callMutation({
         variables: {
           client: client.id,
           triko: trikoId,
@@ -40,10 +40,10 @@ const useAddFavorite = () => {
       if (remove) {
         await setKey(
           'favoriteTrikos',
-          favoriteTrikos.filter((item) => item.id !== trikoId),
+          favoriteTrikos.filter((item) => item !== trikoId),
         );
       } else {
-        await setKey('favoriteTrikos', [...favoriteTrikos, data.response]);
+        await setKey('favoriteTrikos', [...favoriteTrikos, trikoId]);
       }
 
       setLoading(false);
