@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useMemo} from 'react';
 import {GET_FAVORITES} from './queries';
 import {useQuery} from '@apollo/react-hooks';
 import {useSession} from 'hooks/index';
@@ -14,17 +14,16 @@ const useFavorites = () => {
     stack: {client = {}},
     setKey,
   } = useSession();
-  const [favorites, setFavorites] = useState([]);
 
   /**
    * We use an on complete to keep taking the favorites from the session always.
    */
-  useQuery(GET_FAVORITES, {
+  const {data = {}, loading, refetch} = useQuery(GET_FAVORITES, {
     fetchPolicy: 'no-cache',
+    pollInterval: 60000,
     onCompleted: ({response = {}}) => {
       const {favorite = {}} = response;
       const {trikos = []} = favorite;
-      setFavorites(trikos);
       setKey(
         'favoriteTrikos',
         trikos.map((item) => item.id),
@@ -35,8 +34,19 @@ const useFavorites = () => {
     },
   });
 
+  const refresh = async () => {
+    await refetch();
+  };
+  const favorites = useMemo(() => {
+    const {response = {}} = data;
+    const {favorite = {}} = response;
+    const {trikos = []} = favorite;
+    return trikos;
+  }, [data]);
   return {
     favorites,
+    loading,
+    refresh,
   };
 };
 
