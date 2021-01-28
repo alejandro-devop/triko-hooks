@@ -2,6 +2,7 @@ import {useMemo} from 'react';
 import {GET_FAVORITES} from './queries';
 import {useQuery} from '@apollo/react-hooks';
 import {useSession} from 'hooks/index';
+import {isEmpty} from 'shared/utils/functions';
 
 /**
  * Hook to fetch and update the client favorite  trikos
@@ -22,8 +23,8 @@ const useFavorites = () => {
     fetchPolicy: 'no-cache',
     pollInterval: 60000,
     onCompleted: ({response = {}}) => {
-      const {favorite = {}} = response;
-      const {trikos = []} = favorite;
+      const {favorite = {}} = !isEmpty(response) ? response : {};
+      const {trikos = []} = !isEmpty(favorite) ? favorite : {};
       setKey(
         'favoriteTrikos',
         trikos.map((item) => item.id),
@@ -38,9 +39,9 @@ const useFavorites = () => {
     await refetch();
   };
   const favorites = useMemo(() => {
-    const {response = {}} = data;
-    const {favorite = {}} = response;
-    const {trikos = []} = favorite;
+    const {response = {}} = !isEmpty(data) ? data : {};
+    const {favorite = {}} = !isEmpty(response) ? response : {};
+    const {trikos = []} = !isEmpty(favorite) ? favorite : {};
     return trikos;
   }, [data]);
   return {

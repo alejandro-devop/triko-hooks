@@ -1,7 +1,7 @@
 import {CALC_RATE} from './queries';
-import {useState} from 'react';
 import {useQuery} from '@apollo/react-hooks';
 import {useSession} from 'hooks/index';
+import useMyServices from 'shared/hooks/use-my-services';
 import {isEmpty} from 'shared/utils/functions';
 
 const useCalcTotal = (options = {}) => {
@@ -38,17 +38,16 @@ const useCalcTotal = (options = {}) => {
     },
     onCompleted: ({response = {}}) => {
       const requestServices = response.services;
-      const {total = 0, tip: calculatedTip = 0} = calcTotal(requestServices);
+      const requestTotal = calcTotal(requestServices);
       if (onCompleted) {
-        onCompleted({total, tip: calculatedTip});
+        onCompleted(requestTotal);
       }
     },
   });
   const calcTotal = (requestServices = []) =>
     requestServices.reduce((accumulator, currentItem) => {
-      const {Total = 0, Tip = 0} = currentItem.detail || {};
-      accumulator.total = accumulator.total ? accumulator.total + Total : Total;
-      accumulator.tip = accumulator.tip ? accumulator.tip + Tip : Tip;
+      const {Total} = currentItem.detail || {};
+      accumulator += Total;
       return accumulator;
     }, 0);
 
