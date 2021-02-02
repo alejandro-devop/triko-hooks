@@ -29,7 +29,12 @@ const useUserUpdate = () => {
    * @param defaultAttrs
    * @returns {Promise<void>}
    */
-  const updateUser = async ({overrideUser, defaultAttrs = {}, attrs = {}}) => {
+  const updateUser = async ({
+    email,
+    overrideUser,
+    defaultAttrs = {},
+    attrs = {},
+  }) => {
     try {
       const newAttrs = {
         ...defaultAttrs,
@@ -40,12 +45,14 @@ const useUserUpdate = () => {
       await sendUpdate({
         variables: {
           id: (!isEmpty(overrideUser) ? overrideUser : user).id,
+          email,
           attrs: JSON.stringify(newAttrs),
         },
       });
       // First, update the user attrs in session.
       setKey('user', {
         ...(!isEmpty(overrideUser) ? overrideUser : user),
+        email,
         attrs: newAttrs,
       });
     } catch (e) {
