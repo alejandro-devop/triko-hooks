@@ -1,8 +1,8 @@
 import useTranslation from 'hooks/useTranslation';
-import useSession from 'shared/hooks/use-session-client';
 import {useState} from 'react';
 import {isEmpty} from 'shared/utils/functions';
 import Validator from './Validator';
+import {useSession} from 'hooks/index';
 
 /**
  * This hook allows to handle form values and validations
