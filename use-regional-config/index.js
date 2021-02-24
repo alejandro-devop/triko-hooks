@@ -45,6 +45,7 @@ const useRegionConfig = () => {
     shareIncentive = 1000,
     trikoFavorIds,
     bankInfoDocs = [9],
+    requestFetchInterval = 2000,
     docsForShopper = [13, 12],
     shopperIds = [39, 80],
     events = {},
@@ -95,6 +96,7 @@ const useRegionConfig = () => {
     shopperMinimumRate,
     taskMinimumRate,
     courierMinimumRate,
+    requestFetchInterval,
   };
   return appConfigs;
 };

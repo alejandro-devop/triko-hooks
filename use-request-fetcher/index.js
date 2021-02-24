@@ -2,14 +2,16 @@ import {useQuery} from '@apollo/react-hooks';
 import {GET_REQUEST} from './queries';
 import {useSession} from 'hooks/index';
 import {isEmpty} from 'shared/utils/functions';
+import useRegionConfig from 'shared/hooks/use-regional-config';
 
 export const useRequestFetcher = ({requestId, onComplete}) => {
   const {
     stack: {locale},
   } = useSession();
+  const {requestFetchInterval} = useRegionConfig();
   const {loading, refetch, data = {}} = useQuery(GET_REQUEST, {
     fetchPolicy: 'no-cache',
-    pollInterval: 10000,
+    pollInterval: requestFetchInterval,
     variables: {
       id: requestId,
       locale,
