@@ -50,7 +50,7 @@ const useUserUpdate = () => {
         },
       });
       // First, update the user attrs in session.
-      setKey('user', {
+      await setKey('user', {
         ...(!isEmpty(overrideUser) ? overrideUser : user),
         email,
         attrs: newAttrs,

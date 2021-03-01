@@ -5,6 +5,7 @@ import {useSession} from 'hooks/index';
 import useErrorReporter from 'shared/hooks/use-error-reporter';
 import useNotify from 'hooks/useNotification';
 import {ACTIVE_STATE} from 'config/user-statuses';
+import useUserUpdate from 'shared/hooks/use-user-update';
 
 /**
  * This function allows to mark the user  as the register is completed.
@@ -18,6 +19,7 @@ export const useRegisterFinish = () => {
   const reportError = useErrorReporter({
     path: 'src/shared/hooks/use-register-finish/index.js',
   });
+  const {updateUser} = useUserUpdate();
   const [sendRequest] = useMutation(FINALIZE_REGISTER);
   const {
     setKey,
@@ -25,7 +27,7 @@ export const useRegisterFinish = () => {
   } = useSession();
 
   const finish = async (options = {}) => {
-    const {forceActive} = options;
+    const {forceActive, attrs: customAttrs = {}} = options;
     setLoading(true);
     try {
       const {data = {}} = await sendRequest({
@@ -35,11 +37,16 @@ export const useRegisterFinish = () => {
         },
       });
       if (data.response && data.response.id) {
+        await updateUser({attrs: customAttrs});
         await setKey('user', {
           ...user,
           workflow: forceActive
             ? ACTIVE_STATE
             : data.response.transition.workflow,
+          attrs: {
+            ...user.attrs,
+            ...customAttrs,
+          },
         });
       }
       setLoading(false);
