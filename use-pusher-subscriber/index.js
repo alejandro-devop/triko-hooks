@@ -1,5 +1,6 @@
 import {useContext} from 'react';
 import {PusherContext} from 'shared/components/pusher-provider';
+import {isEmpty} from 'shared/utils/functions';
 
 /**
  * This hook allows to connect to the pusher context and use the client functions
@@ -9,12 +10,20 @@ import {PusherContext} from 'shared/components/pusher-provider';
  * @returns {{subscribeEvent: (function(*=, *=): (void|*)), unSubscribeEvent: (function(*=, *=): void)}}
  */
 const usePusherSubscriber = () => {
-  const {client} = useContext(PusherContext);
+  const context = useContext(PusherContext);
+  const {client} = !isEmpty(context) ? context : {};
+  console.log('Client: ', client);
   return {
-    subscribeEvent: (eventName, callBack) =>
-      client.subscribeEvent(eventName, callBack),
-    unSubscribeEvent: (eventName, subscriptionId) =>
-      client.unSubscribe(eventName, subscriptionId),
+    subscribeEvent: (eventName, callBack) => {
+      if (!isEmpty(client)) {
+        client.subscribeEvent(eventName, callBack);
+      }
+    },
+    unSubscribeEvent: (eventName, subscriptionId) => {
+      if (!isEmpty(client)) {
+        client.unSubscribe(eventName, subscriptionId);
+      }
+    },
   };
 };
 
