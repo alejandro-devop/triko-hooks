@@ -31,7 +31,7 @@ export const useRegisterFinish = () => {
       const {data = {}} = await sendRequest({
         variables: {
           locale,
-          user: user.id,
+          userId: user.id,
         },
       });
       if (data.response && data.response.id) {

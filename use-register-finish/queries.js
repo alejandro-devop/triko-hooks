@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const FINALIZE_REGISTER = gql`
-  mutation finalizeRegister($user: Int, $locale: String = "en") {
-    finalizeregister(user_id: $user, locale: $locale) {
+  mutation finalizeRegister($userId: Int, $locale: String = "en") {
+    response: finalizeregister(user_id: $userId, locale: $locale) {
       id
       transition: workflowtransition {
         workflow

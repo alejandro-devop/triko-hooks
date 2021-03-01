@@ -30,6 +30,7 @@ class Validator {
      */
     length: (value, options = {}) => {
       const {min, max, message} = options;
+      console.log('Value: ', value);
       let error = false;
       if (min && max === undefined && value.length < min) {
         error = this.translate(message ? message : 'validations_length', {

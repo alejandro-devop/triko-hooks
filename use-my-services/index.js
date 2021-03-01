@@ -4,6 +4,7 @@ import {GET_TRIKO_SERVICES} from './queries';
 import useNotify from 'hooks/useNotification';
 import useTranslation from 'hooks/useTranslation';
 import useRegionConfig from 'shared/hooks/use-regional-config';
+import useErrorReporter from 'shared/hooks/use-error-reporter';
 
 /**
  * This hook allows to fetch the triko services and stored into the myServices array (Session Stack)
@@ -17,8 +18,9 @@ const useMyServices = () => {
     setKey,
   } = useSession();
   const {trikoFavorIds = []} = useRegionConfig();
-  const {error} = useNotify();
-  const {_t} = useTranslation();
+  const reportError = useErrorReporter({
+    path: 'src/shared/hooks/use-my-services/index.js',
+  });
   const [fetchTrikoServices, {loading: fetching}] = useLazyQuery(
     GET_TRIKO_SERVICES,
   );
@@ -66,12 +68,14 @@ const useMyServices = () => {
         saveMyServices(data.response);
       }
     } catch (e) {
-      console.log('Error: ', e);
-      error(_t('generic_error', {code: 'TK-00018'}));
+      reportError(e, {
+        code: 'TWA-000007',
+        message: 'Error while refreshing the services',
+      });
     }
   };
 
-  const getServices = async (callback) => {
+  const getServices = async () => {
     try {
       await fetchTrikoServices({
         variables: {
@@ -80,8 +84,10 @@ const useMyServices = () => {
         },
       });
     } catch (e) {
-      console.log('error: ', error);
-      error(_t('generic_error', {code: 'TK-00019'}));
+      reportError(e, {
+        code: 'TWA-000008',
+        message: 'Error while getting the triko services',
+      });
     }
   };
   return {

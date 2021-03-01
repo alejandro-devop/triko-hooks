@@ -1,14 +1,13 @@
 import {useMemo, useState} from 'react';
 import useSession from 'shared/hooks/use-session-triko';
-import {useLazyQuery, useQuery} from '@apollo/react-hooks';
+import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_PENDING_REQUEST_CLIENT, GET_PENDING_REQUEST_TRIKO} from './queries';
 import useRegionConfig from 'shared/hooks/use-regional-config';
 import {STATUS_CANCEL, STATUS_FINISHED} from 'config/request-statuses';
 import {startedStatuses} from 'shared/hooks/use-request-status';
 import {isEmpty} from 'shared/utils/functions';
-import {WORKFLOWS_MAP} from 'shared/commons/constants';
+import {EXECUTION_WORKFLOWS, WORKFLOWS_MAP} from 'shared/commons/constants';
 export const TYPE_REQUEST = 1;
-export const TYPE_EMERGENCY = 2;
 export const TYPE_BAG = 3;
 
 const getType = ({allTypes, onlyFavors}) => {
@@ -22,15 +21,14 @@ const getType = ({allTypes, onlyFavors}) => {
 
 const useRequestList = (options = {}) => {
   const {
-    allTypes,
     onlyFavors,
     isTriko,
     noRunning,
-    onlyCurrentDay,
-    onlyMyServices,
     noCanceled,
     noFinished,
     onlyPending,
+    onlyAccepted,
+    onlyOwned,
   } = options;
   const {
     stack: {
@@ -61,6 +59,10 @@ const useRequestList = (options = {}) => {
   if (onlyPending) {
     variables.workflow.push(WORKFLOWS_MAP.pending);
   }
+
+  if (onlyAccepted) {
+    variables.workflow = EXECUTION_WORKFLOWS;
+  }
   variables.workflow = JSON.stringify(variables.workflow);
   const [getPendingRequests, {data = {}, loading}] = useLazyQuery(
     isTriko ? GET_PENDING_REQUEST_TRIKO : GET_PENDING_REQUEST_CLIENT,
@@ -75,6 +77,7 @@ const useRequestList = (options = {}) => {
     requestsList = requestsList.filter((item) => {
       const [detail = []] = item.details;
       const {service} = detail;
+      const {triko = []} = item;
       const included = trikoFavorIds.includes(service.type.id);
       const {workflow} = !isEmpty(item.transition) ? item.transition : {};
       const attributes = item.attributes ? JSON.parse(item.attributes) : {};
@@ -88,6 +91,9 @@ const useRequestList = (options = {}) => {
         return false;
       }
       if (noRunning && startedStatuses.includes(workflow)) {
+        return false;
+      }
+      if (isTriko && onlyOwned && !triko.includes(triko.id)) {
         return false;
       }
       if (onlyFavors) {

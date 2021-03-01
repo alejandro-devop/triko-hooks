@@ -48,7 +48,6 @@ const useRegionConfig = () => {
     requestFetchInterval = 2000,
     docsForShopper = [13, 12],
     shopperIds = [39, 80],
-    events = {},
     search = {},
     requests = {},
   } = general;
@@ -57,7 +56,7 @@ const useRegionConfig = () => {
   const {place2payUrl, paymentContactEmail} = placetopay;
   const {
     maximumRate,
-    minimumRate,
+    minimumRate = 6000,
     rateStep,
     minimumIncentiveStep = 100,
     minimumMoneyStep = 50,
