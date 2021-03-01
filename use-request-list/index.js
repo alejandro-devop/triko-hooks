@@ -77,7 +77,7 @@ const useRequestList = (options = {}) => {
     requestsList = requestsList.filter((item) => {
       const [detail = []] = item.details;
       const {service} = detail;
-      const {triko = []} = item;
+      const {triko: requestTrikos = []} = item;
       const included = trikoFavorIds.includes(service.type.id);
       const {workflow} = !isEmpty(item.transition) ? item.transition : {};
       const attributes = item.attributes ? JSON.parse(item.attributes) : {};
@@ -93,7 +93,8 @@ const useRequestList = (options = {}) => {
       if (noRunning && startedStatuses.includes(workflow)) {
         return false;
       }
-      if (isTriko && onlyOwned && !triko.includes(triko.id)) {
+      const trikosIds = requestTrikos.map((item) => item.id);
+      if (isTriko && onlyOwned && !trikosIds.includes(triko.id)) {
         return false;
       }
       if (onlyFavors) {
@@ -103,7 +104,6 @@ const useRequestList = (options = {}) => {
     });
     return requestsList;
   }, [data, onlyFavors]);
-
   return {
     getPendingRequests,
     loading,
