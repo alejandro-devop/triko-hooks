@@ -1,7 +1,7 @@
 import {useMutation} from '@apollo/react-hooks';
 import {UPDATE_USER} from './queries';
-import useNotify from 'hooks/useNotification';
-import useTranslation from 'hooks/useTranslation';
+import useNotify from 'shared/hooks/use-notification';
+import useTranslation from 'shared/hooks/use-translate';
 import useSession from 'hooks/useSession';
 import {isEmpty} from 'shared/utils/functions';
 

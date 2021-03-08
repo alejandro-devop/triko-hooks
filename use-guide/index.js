@@ -2,7 +2,7 @@ import {useContext} from 'react';
 import {GuideContext} from 'shared/components/step-guidance/GuidanceProvider';
 import {useMutation} from '@apollo/react-hooks';
 import {UPDATE_USER_ATTRS} from 'config/queries/user-queries';
-import useNotify from 'hooks/useNotification';
+import useNotify from 'shared/hooks/use-notification';
 import useSession from 'hooks/useSession';
 
 const useGuide = () => {

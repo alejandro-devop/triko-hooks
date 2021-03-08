@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useMutation} from '@apollo/react-hooks';
 import {SAVE_RATING} from './queries';
 import useErrorReporter from 'shared/hooks/use-error-reporter';
-import useNotify from 'hooks/useNotification';
+import useNotify from 'shared/hooks/use-notification';
 
 const useRateClient = (request = {}) => {
   const [loading, setLoading] = useState(false);

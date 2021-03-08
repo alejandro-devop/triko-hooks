@@ -1,8 +1,8 @@
 import useSession from 'hooks/useSession';
 import {useLazyQuery, useQuery} from '@apollo/react-hooks';
 import {GET_TRIKO_SERVICES} from './queries';
-import useNotify from 'hooks/useNotification';
-import useTranslation from 'hooks/useTranslation';
+import useNotify from 'shared/hooks/use-notification';
+import useTranslation from 'shared/hooks/use-translate';
 import useRegionConfig from 'shared/hooks/use-regional-config';
 import useErrorReporter from 'shared/hooks/use-error-reporter';
 

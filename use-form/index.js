@@ -1,4 +1,4 @@
-import useTranslation from 'hooks/useTranslation';
+import useTranslation from 'shared/hooks/use-translate';
 import {useState} from 'react';
 import {isEmpty} from 'shared/utils/functions';
 import Validator from './Validator';

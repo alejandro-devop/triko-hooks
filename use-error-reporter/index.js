@@ -1,8 +1,8 @@
 import {APP_CODE, ERROR_REPORTER_URL} from 'react-native-dotenv';
 import {useSession} from 'hooks/index';
 import {isEmpty} from 'shared/utils/functions';
-import useNotify from 'hooks/useNotification';
-import useTranslation from 'hooks/useTranslation';
+import useNotify from 'shared/hooks/use-notification';
+import useTranslation from 'shared/hooks/use-translate';
 
 const useErrorReporter = (config = {}) => {
   const {stack = {}} = useSession();

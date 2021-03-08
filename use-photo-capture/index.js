@@ -1,9 +1,9 @@
-import useTranslation from 'hooks/useTranslation';
+import useTranslation from 'shared/hooks/use-translate';
 import ImagePicker from 'react-native-image-picker';
 
 /**
  * This hook allows to ask the user for capture a photo or select an image from the gallery
- * It returns a function that must be called to open the prompt, 
+ * It returns a function that must be called to open the prompt,
  * capturePhoto({
       onCustom: button => {
         if (button === 'vu') {

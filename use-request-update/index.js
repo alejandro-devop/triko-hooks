@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import {useMutation} from '@apollo/react-hooks';
 import {UPDATE_REQUEST} from './queries';
-import useTranslation from 'hooks/useTranslation';
+import useTranslation from 'shared/hooks/use-translate';
 import {useSession} from 'hooks/index';
-import useNotify from 'hooks/useNotification';
+import useNotify from 'shared/hooks/use-notification';
 import useErrorReporter from 'shared/hooks/use-error-reporter';
 
 const useRequestUpdate = () => {

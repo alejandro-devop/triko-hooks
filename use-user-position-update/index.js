@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {UPDATE_TRIKO_LOCATION} from './queries';
 import {useMutation} from '@apollo/react-hooks';
 import useErrorReporter from 'shared/hooks/use-error-reporter';
-import useNotify from 'hooks/useNotification';
+import useNotify from 'shared/hooks/use-notification';
 import {useSession} from 'hooks/index';
 
 /**

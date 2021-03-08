@@ -22,7 +22,7 @@ const getInitialState = (permissions) =>
  * @version 1.0.0
  * @author Alejandro <alejandro.devop@gmail.com>
  * @param options
- * @returns {{appPermissions: *, reCheck: *}}
+ * @returns {{appPermissions: *, reCheck: *, loading: boolean}}
  */
 const useHasPermissions = (options = {}) => {
   const {permissions = []} = options;
@@ -30,9 +30,11 @@ const useHasPermissions = (options = {}) => {
   const [appPermissions, setAppPermissions] = useState(
     getInitialState(permissions),
   );
+  const [loading, setLoading] = useState(true);
 
   const checkIos = async () => {
     const grantedPermissions = {};
+    setLoading(true);
     const permissionStatuses = await Promise.all(
       permissions.map(
         async (permissionName) =>
@@ -47,10 +49,12 @@ const useHasPermissions = (options = {}) => {
       grantedPermissions[permissions[key]] = granted;
     });
     setAppPermissions(grantedPermissions);
+    setLoading(false);
   };
 
   const checkAndroid = async () => {
     const grantedPermissions = {};
+    setLoading(true);
     const permissionStatuses = await Promise.all(
       permissions.map(
         async (permissionName) =>
@@ -65,6 +69,7 @@ const useHasPermissions = (options = {}) => {
       grantedPermissions[permissions[key]] = granted;
     });
     setAppPermissions(grantedPermissions);
+    setLoading(false);
   };
 
   const checkPermissions = async () => {
@@ -80,6 +85,7 @@ const useHasPermissions = (options = {}) => {
   }, []);
 
   return {
+    loading,
     appPermissions,
     reCheck: checkPermissions,
   };

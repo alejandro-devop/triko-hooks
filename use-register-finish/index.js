@@ -3,7 +3,7 @@ import {FINALIZE_REGISTER} from './queries';
 import {useMutation} from '@apollo/react-hooks';
 import {useSession} from 'hooks/index';
 import useErrorReporter from 'shared/hooks/use-error-reporter';
-import useNotify from 'hooks/useNotification';
+import useNotify from 'shared/hooks/use-notification';
 import {ACTIVE_STATE} from 'config/user-statuses';
 import useUserUpdate from 'shared/hooks/use-user-update';
 

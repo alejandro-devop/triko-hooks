@@ -22,7 +22,7 @@ import {
   STATUS_WAITING_FOR_TRIKO,
   STATUS_CONFIRM_PAYMENT,
 } from 'config/request-statuses';
-import useTranslation from 'hooks/useTranslation';
+import useTranslation from 'shared/hooks/use-translate';
 
 export const startedStatuses = [
   STATUS_CONFIRM_FINISHED,

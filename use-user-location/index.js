@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Platform} from 'react-native';
-import useNotify from 'hooks/useNotification';
+import useNotify from 'shared/hooks/use-notification';
 import Geolocation from '@react-native-community/geolocation';
 import useErrorReporter from 'shared/hooks/use-error-reporter';
 import {useSession} from 'hooks/index';
