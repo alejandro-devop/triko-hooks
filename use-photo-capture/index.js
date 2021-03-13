@@ -1,5 +1,5 @@
 import useTranslation from 'shared/hooks/use-translate';
-import ImagePicker from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 /**
  * This hook allows to ask the user for capture a photo or select an image from the gallery
@@ -39,20 +39,52 @@ const usePhotoCapture = (otherOptions = {}) => {
     },
     ...otherOptions,
   };
-  return (config = {}) => {
-    const {onCustom, onPhotoSelected, onCancel, onError} = config;
-    ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel && onCancel) {
-        onCancel();
-      } else if (response.error && onError) {
-        onError(response.error);
-      } else if (response.customButton && onCustom) {
-        onCustom(response.customButton);
-      } else if (!response.didCancel && !response.error && onPhotoSelected) {
-        onPhotoSelected(response);
-      }
+
+  const handleFromLibrary = () => {
+    return new Promise((resolve, reject) => {
+      launchImageLibrary(options, (response) => {
+        if (response.error) {
+          reject(response);
+        } else if (!response.didCancel && !response.error) {
+          resolve(response);
+        }
+      });
     });
   };
+
+  const handleFromCamera = async () => {
+    return new Promise((resolve, reject) => {
+      launchCamera(options, (response) => {
+        if (response.error) {
+          reject(response);
+        } else if (!response.didCancel && !response.error) {
+          resolve(response);
+        }
+      });
+    });
+  };
+
+  return {
+    fromGallery: handleFromLibrary,
+    fromCamera: handleFromCamera,
+  };
+  // return (config = {}) => {
+  //   const {onCustom, onPhotoSelected, onCancel, onError} = config;
+  //   launchImageLibrary(options, (response) => {
+  //     console.log('Response: ', response);
+  //   });
+  //   ImagePicker(options, (response) => {
+  //     if (response.didCancel && onCancel) {
+  //       onCancel();
+  //     } else if (response.error && onError) {
+  //       onError(response.error);
+  //     } else if (response.customButton && onCustom) {
+  //       onCustom(response.customButton);
+  //     } else if (!response.didCancel && !response.error && onPhotoSelected) {
+  //       onPhotoSelected(response);
+  //     }
+  //   });
+  // };
 };
 
 export default usePhotoCapture;
