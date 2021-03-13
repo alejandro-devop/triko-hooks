@@ -7,6 +7,7 @@ import {STATUS_CANCEL, STATUS_FINISHED} from 'config/request-statuses';
 import {startedStatuses} from 'shared/hooks/use-request-status';
 import {isEmpty} from 'shared/utils/functions';
 import {EXECUTION_WORKFLOWS, WORKFLOWS_MAP} from 'shared/commons/constants';
+import moment from 'moment';
 export const TYPE_REQUEST = 1;
 export const TYPE_BAG = 3;
 
@@ -24,10 +25,11 @@ const useRequestList = (options = {}) => {
     onlyFavors,
     isTriko,
     noRunning,
+    onlyCurrentDay,
     noCanceled,
     noFinished,
     onlyPending,
-    onlyAccepted,
+    onlyFutureEvents,
     onlyOwned,
   } = options;
   const {
@@ -40,6 +42,7 @@ const useRequestList = (options = {}) => {
   } = useSession();
   const [currentLocation] = useState(userLocation);
   const {trikoFavorIds = [], defaultSearchDistance = 2} = useRegionConfig();
+  const currentDate = moment().format('YYYY-MM-DD');
   const variables = {
     ...(isTriko ? {triko: triko.id} : {client: client.id}),
     type: getType(options),
@@ -59,11 +62,19 @@ const useRequestList = (options = {}) => {
   if (onlyPending) {
     variables.workflow.push(WORKFLOWS_MAP.pending);
   }
-
-  if (onlyAccepted) {
-    variables.workflow = EXECUTION_WORKFLOWS;
+  if (onlyCurrentDay) {
+  }
+  if (onlyOwned) {
+    variables.onlyOwned = true;
+  }
+  if (onlyFutureEvents) {
+    variables.date = `>=.${currentDate}`;
+  }
+  if (onlyCurrentDay) {
+    variables.date = `${currentDate}`;
   }
   variables.workflow = JSON.stringify(variables.workflow);
+
   const [getPendingRequests, {data = {}, loading}] = useLazyQuery(
     isTriko ? GET_PENDING_REQUEST_TRIKO : GET_PENDING_REQUEST_CLIENT,
     {
@@ -72,6 +83,7 @@ const useRequestList = (options = {}) => {
       variables,
     },
   );
+
   const requests = useMemo(() => {
     let requestsList = data.response ? data.response : [];
     requestsList = requestsList.filter((item) => {

@@ -155,13 +155,17 @@ export const GET_PENDING_REQUEST_TRIKO = gql`
     $triko: Int
     $nearest: String
     $locale: String = "en"
+    $onlyOwned: Boolean
     $type: Int = 1
+    $date: String
     $workflow: String
   ) {
     response: servicesrequests(
       client_id: $client
       triko_id: $triko
       includeRejected: $rejected
+      onlyOwned: $onlyOwned
+      application_date: $date
       closeToMe: $nearest
       service_request_type_id: $type
       locale: $locale
