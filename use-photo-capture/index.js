@@ -31,6 +31,8 @@ const usePhotoCapture = (otherOptions = {}) => {
     takePhotoButtonTitle: _t('image_picker_take_photo'),
     chooseFromLibraryButtonTitle: _t('image_picker_from_gallery'),
     maxWidth: 500,
+    base64: true,
+    includeBase64: true,
     maxHeight: 500,
     quality: 0.6,
     storageOptions: {
@@ -43,10 +45,19 @@ const usePhotoCapture = (otherOptions = {}) => {
   const handleFromLibrary = () => {
     return new Promise((resolve, reject) => {
       launchImageLibrary(options, (response) => {
+        const {fileName, fileSize, height, type, uri, width, base64} = response;
         if (response.error) {
           reject(response);
         } else if (!response.didCancel && !response.error) {
-          resolve(response);
+          resolve({
+            fileName,
+            fileSize,
+            height,
+            type,
+            uri,
+            width,
+            data: base64,
+          });
         }
       });
     });
@@ -55,10 +66,19 @@ const usePhotoCapture = (otherOptions = {}) => {
   const handleFromCamera = async () => {
     return new Promise((resolve, reject) => {
       launchCamera(options, (response) => {
+        const {fileName, fileSize, height, type, uri, width, base64} = response;
         if (response.error) {
           reject(response);
         } else if (!response.didCancel && !response.error) {
-          resolve(response);
+          resolve({
+            fileName,
+            fileSize,
+            height,
+            type,
+            uri,
+            width,
+            data: base64,
+          });
         }
       });
     });
