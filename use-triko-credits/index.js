@@ -8,7 +8,7 @@ const useTrikoCredits = () => {
     stack: {triko = {}, client = {}},
   } = useSession();
   const {loading, data = {}} = useQuery(GET_TRIKO_CREDITS, {
-    pollInterval: 10000,
+    pollInterval: 5000,
     fetchPolicy: 'no-cache',
     variables: {
       triko: !isEmpty(triko) ? triko.id : null,

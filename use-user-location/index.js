@@ -10,10 +10,10 @@ import {useSession} from 'hooks/index';
  * @version 1.0.0
  * @author Alejandro <alejandro.devop@gmail.com>
  * @param options
- * @returns {{getLocation: *, location: *, loading: *}}
+ * @returns {{getLocation: *, location: *, loading: *, getGeoLocation: function}}
  */
 const useUserLocation = (options = {}) => {
-  const {onLocationFound} = options;
+  const {onLocationFound, lazy} = options;
   const [loading, setLoading] = useState(false);
   const {setKey} = useSession();
   const reportError = useErrorReporter({
@@ -69,11 +69,29 @@ const useUserLocation = (options = {}) => {
       setLoading(false);
     }
   };
+
+  const getGeoLocation = async (geoOptions = {}) => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(
+        ({coords}) => {
+          resolve(coords);
+        },
+        (error) => {
+          reject(error);
+        },
+        geoOptions,
+      );
+    });
+  };
+
   useEffect(() => {
-    getLocation();
+    if (!lazy) {
+      getLocation();
+    }
   }, []);
   return {
     getLocation,
+    getGeoLocation,
     loading,
     location,
   };

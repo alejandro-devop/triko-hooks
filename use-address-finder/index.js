@@ -37,7 +37,6 @@ const useAddressFinder = () => {
         latitude: lat,
         longitude: lng,
       });
-      console.log('Finding location: ');
       if (Array.isArray(response)) {
         const [matchedPos] = response;
         const {

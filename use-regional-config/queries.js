@@ -21,6 +21,9 @@ export const GET_REGION_CONFIG = gql`
         rateStep
         minimunRate
         maximunRate
+        shopperMinimumRate
+        taskMinimumRate
+        courierMinimumRate
       }
       payments {
         placetopay {

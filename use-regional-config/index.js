@@ -58,6 +58,7 @@ const useRegionConfig = () => {
     maximumRate,
     minimumRate = 6000,
     rateStep,
+    rateStepAlternative = 1000,
     minimumIncentiveStep = 100,
     minimumMoneyStep = 50,
     shopperMinimumRate = 10000,
@@ -84,6 +85,7 @@ const useRegionConfig = () => {
     place2payUrl,
     bankInfoDocs,
     paymentContactEmail,
+    rateStepAlternative,
     termsUrl,
     welcomeVideo: '3O8C2d9e4i0', // Deprecated
     landingUrl: 'https://triko.co',

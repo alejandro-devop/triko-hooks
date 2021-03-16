@@ -39,6 +39,7 @@ const useSession = (callBack) => {
         locale: stack.locale,
         dictionary: stack.dictionary,
         region: stack.region,
+        appRegion: stack.appRegion,
         regionId: stack.regionId,
         regionalConfig: stack.regionalConfig,
       });
