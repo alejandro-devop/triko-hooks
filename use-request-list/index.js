@@ -93,6 +93,7 @@ const useRequestList = (options = {}) => {
       const includedInFavors = trikoFavorIds.includes(service.type.id);
       const {workflow} = !isEmpty(item.transition) ? item.transition : {};
       const attributes = item.attributes ? JSON.parse(item.attributes) : {};
+
       const isFinished =
         (isTriko && attributes.terminatedTriko) ||
         (!isTriko && attributes.terminatedClient);
@@ -109,10 +110,11 @@ const useRequestList = (options = {}) => {
       if (isTriko && onlyOwned && !trikosIds.includes(triko.id)) {
         return false;
       }
-      if (isTriko && 
-        !isEmpty(attributes.market) &&
-        !isEmpty(attributes.cart) &&
-        parseInt(attributes.cart, 10) === 0
+      if (
+        isTriko &&
+        !isEmpty(attributes.shopperForm) &&
+        ((!isEmpty(attributes.cart) && attributes.cart === 0) ||
+          !attributes.cart)
       ) {
         return false;
       }
