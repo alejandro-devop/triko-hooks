@@ -6,7 +6,7 @@ import useRegionConfig from 'shared/hooks/use-regional-config';
 import {STATUS_CANCEL, STATUS_FINISHED} from 'config/request-statuses';
 import {startedStatuses} from 'shared/hooks/use-request-status';
 import {isEmpty} from 'shared/utils/functions';
-import {EXECUTION_WORKFLOWS, WORKFLOWS_MAP} from 'shared/commons/constants';
+import {WORKFLOWS_MAP} from 'shared/commons/constants';
 import moment from 'moment';
 export const TYPE_REQUEST = 1;
 export const TYPE_BAG = 3;
@@ -90,7 +90,7 @@ const useRequestList = (options = {}) => {
       const [detail = []] = item.details;
       const {service} = detail;
       const {triko: requestTrikos = []} = item;
-      const included = trikoFavorIds.includes(service.type.id);
+      const includedInFavors = trikoFavorIds.includes(service.type.id);
       const {workflow} = !isEmpty(item.transition) ? item.transition : {};
       const attributes = item.attributes ? JSON.parse(item.attributes) : {};
       const isFinished =
@@ -117,7 +117,7 @@ const useRequestList = (options = {}) => {
         return false;
       }
       if (onlyFavors) {
-        return included;
+        return includedInFavors;
       }
       return true;
     });
