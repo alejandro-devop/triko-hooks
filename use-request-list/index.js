@@ -109,6 +109,13 @@ const useRequestList = (options = {}) => {
       if (isTriko && onlyOwned && !trikosIds.includes(triko.id)) {
         return false;
       }
+      if (isTriko && 
+        !isEmpty(attributes.market) &&
+        !isEmpty(attributes.cart) &&
+        parseInt(attributes.cart, 10) === 0
+      ) {
+        return false;
+      }
       if (onlyFavors) {
         return included;
       }
