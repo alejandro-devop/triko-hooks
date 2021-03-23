@@ -18,8 +18,27 @@ const useCalcTotal = (options = {}) => {
     transport,
     tip,
     services,
+    price,
     onCompleted,
   } = options;
+  console.log(
+    'Variables: ',
+    JSON.stringify({
+      byService,
+      services: JSON.stringify(services),
+      date,
+      duration: parseInt(duration, 10),
+      byHour,
+      price,
+      type: type.id,
+      distance,
+      time,
+      transport,
+      tip,
+      triko: !isEmpty(triko) && !isEmpty(triko.id) ? triko.id : '0',
+      region: regionId,
+    }),
+  );
   const {loading, data = {}} = useQuery(CALC_RATE, {
     fetchPolicy: 'no-cache',
     variables: {
@@ -28,6 +47,7 @@ const useCalcTotal = (options = {}) => {
       date,
       duration: parseInt(duration, 10),
       byHour,
+      price,
       type: type.id,
       distance,
       time,
@@ -98,8 +118,12 @@ export const useCalcRateClient = (options = {}) => {
     distance,
     attrs = {},
     triko = {},
+    total: price,
+    attributes,
+    isFavor,
   } = request;
   const {transport, tip} = attrs;
+  const {incentive} = !isEmpty(attributes) ? JSON.parse(attributes) : {};
   const services = details.map((item) => item.service.id);
   const {
     stack: {regionId},
@@ -114,8 +138,9 @@ export const useCalcRateClient = (options = {}) => {
     distance,
     triko,
     regionId,
+    price: isFavor ? price : null,
     transport,
-    tip,
+    tip: !isEmpty(tip) && tip > 0 ? tip : incentive,
     services,
     onCompleted,
   });

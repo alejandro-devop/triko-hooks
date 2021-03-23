@@ -12,12 +12,12 @@ const usePayment = () => {
   const {error} = useNotify();
   const {_t} = useTranslation();
   const {
-    setKey,
+    setAll,
     stack: {locale, selectedToPay = {}},
   } = useSession();
 
   const initPayment = async (serviceRequest = {}, options = {}) => {
-    const {isShopper, isTask, isCourier, total} = options;
+    const {isShopper, isTask, isCourier, isFavor, total} = options;
     setLoading(true);
     const {
       transition: {workflow},
@@ -32,22 +32,34 @@ const usePayment = () => {
         });
         setLoading(false);
         setTimeout(() => {
-          setKey('selectedToPay', {
-            ...selectedToPay,
-            ...data.response,
+          setAll({
+            orderInProgress: {
+              ...(selectedToPay.order || {}),
+            },
+            selectedToPay: {
+              ...selectedToPay,
+              ...data.response,
+              isShopper,
+              isTask,
+              isCourier,
+              total,
+              isFavor,
+            },
+          });
+        }, 1000);
+      } else {
+        await setAll({
+          orderInProgress: {
+            ...(selectedToPay.order || {}),
+          },
+          selectedToPay: {
+            ...serviceRequest,
             isShopper,
             isTask,
             isCourier,
+            isFavor,
             total,
-          });
-        }, 500);
-      } else {
-        await setKey('selectedToPay', {
-          ...serviceRequest,
-          isShopper,
-          isTask,
-          isCourier,
-          total,
+          },
         });
       }
     } catch (e) {

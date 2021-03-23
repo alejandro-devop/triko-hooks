@@ -110,11 +110,10 @@ const useRequestList = (options = {}) => {
       if (isTriko && onlyOwned && !trikosIds.includes(triko.id)) {
         return false;
       }
-      if (
-        isTriko &&
-        !isEmpty(attributes.shopperForm) &&
-        ((!isEmpty(attributes.cart) && attributes.cart === 0) ||
-          !attributes.cart)
+      if (isTriko &&
+        !isEmpty(attributes.market) &&
+        !isEmpty(attributes.cart) &&
+        parseInt(attributes.cart, 10) === 0
       ) {
         return false;
       }

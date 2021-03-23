@@ -14,7 +14,7 @@ const useCurrency = () => {
   const {
     stack: {region, countryCode, locale},
   } = useSession();
-  const {currency} = countries[countryCode];
+  const {currency} = countries[countryCode] || {};
   return {
     currency,
     flag: <Flag size={24} code={countryCode} />,

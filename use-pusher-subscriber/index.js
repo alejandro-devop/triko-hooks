@@ -12,7 +12,6 @@ import {isEmpty} from 'shared/utils/functions';
 const usePusherSubscriber = () => {
   const context = useContext(PusherContext);
   const {client} = !isEmpty(context) ? context : {};
-  console.log('Client: ', client);
   return {
     subscribeEvent: (eventName, callBack) => {
       if (!isEmpty(client)) {
