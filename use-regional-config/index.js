@@ -50,6 +50,7 @@ const useRegionConfig = () => {
     shopperIds = [39, 80],
     search = {},
     requests = {},
+    minimumAge = 18,
   } = general;
   const {minimumScheduleAnticipation = 30} = requests;
   const {radius = '20'} = search;
@@ -72,6 +73,7 @@ const useRegionConfig = () => {
     dayStartsAt,
     dayEndsAt,
     rateStep,
+    minimumAge,
     minimumRate: minimumRate,
     maximumRate: maximumRate,
     minimumIncentiveStep,
