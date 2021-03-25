@@ -7,6 +7,7 @@ export const GET_EXECUTION_REQUESTS = gql`
     $triko: Int
     $locale: String = "en"
     $workflow: String
+    $onlyOwned: Boolean
   ) {
     response: servicesrequests(
       id: $id
@@ -14,6 +15,7 @@ export const GET_EXECUTION_REQUESTS = gql`
       triko_id: $triko
       locale: $locale
       workflow_transition_id: $workflow
+      onlyOwned: $onlyOwned
     ) {
       id
       address

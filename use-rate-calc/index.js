@@ -21,24 +21,7 @@ const useCalcTotal = (options = {}) => {
     price,
     onCompleted,
   } = options;
-  console.log(
-    'Variables: ',
-    JSON.stringify({
-      byService,
-      services: JSON.stringify(services),
-      date,
-      duration: parseInt(duration, 10),
-      byHour,
-      price,
-      type: type.id,
-      distance,
-      time,
-      transport,
-      tip,
-      triko: !isEmpty(triko) && !isEmpty(triko.id) ? triko.id : '0',
-      region: regionId,
-    }),
-  );
+
   const {loading, data = {}} = useQuery(CALC_RATE, {
     fetchPolicy: 'no-cache',
     variables: {

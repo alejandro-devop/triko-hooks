@@ -9,13 +9,15 @@ const SHOPPER_WORKFLOWS = {
 
 const useExecutionRequest = (options = {}) => {
   const {
-    stack: {locale},
+    stack: {locale, client = {}},
   } = useSession();
   const {loading, data = {}} = useQuery(GET_EXECUTION_REQUESTS, {
     fetchPolicy: 'no-cache',
     pollInterval: 8000,
     variables: {
       locale,
+      client: client.id,
+      onlyOwned: true,
       workflow: JSON.stringify([
         SHOPPER_WORKFLOWS.shopping,
         WORKFLOWS_MAP.started,
