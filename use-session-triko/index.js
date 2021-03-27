@@ -89,6 +89,7 @@ const useSession = (callBack = null) => {
         };
         dispatch(setAllSession(payloadToPersist));
         await SessionService.writeAll(payloadToPersist);
+        return payloadToPersist;
       } catch (e) {
         throw e;
       }
