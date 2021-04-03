@@ -40,6 +40,7 @@ const useSession = (callBack) => {
         dictionary: stack.dictionary,
         region: stack.region,
         appRegion: stack.appRegion,
+        countryCode: stack.countryCode,
         regionId: stack.regionId,
         regionalConfig: stack.regionalConfig,
       });
