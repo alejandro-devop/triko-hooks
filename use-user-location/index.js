@@ -56,7 +56,7 @@ const useUserLocation = (options = {}) => {
             setKey('locationUnavailable', true);
             reportError(error, {
               code: 'TK-000001',
-              message: 'Error while getting the user location',
+              // message: 'Error while getting the user location',
             });
           },
           geoOptions,
