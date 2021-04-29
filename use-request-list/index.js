@@ -60,6 +60,7 @@ const useRequestList = (options = {}) => {
   }
 
   if (onlyPending) {
+    variables.onlyPending = true;
     variables.workflow.push(WORKFLOWS_MAP.pending);
   }
   if (onlyCurrentDay) {
@@ -74,7 +75,6 @@ const useRequestList = (options = {}) => {
     variables.date = `${currentDate}`;
   }
   variables.workflow = JSON.stringify(variables.workflow);
-
   const [getPendingRequests, {data = {}, loading}] = useLazyQuery(
     isTriko ? GET_PENDING_REQUEST_TRIKO : GET_PENDING_REQUEST_CLIENT,
     {
@@ -110,7 +110,8 @@ const useRequestList = (options = {}) => {
       if (isTriko && onlyOwned && !trikosIds.includes(triko.id)) {
         return false;
       }
-      if (isTriko &&
+      if (
+        isTriko &&
         !isEmpty(attributes.market) &&
         !isEmpty(attributes.cart) &&
         parseInt(attributes.cart, 10) === 0
