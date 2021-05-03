@@ -20,7 +20,7 @@ const useAddressSaveClient = (options = {}) => {
     setLoading(true);
     try {
       const {address, buildingType, title, isMain = 1, lat, lng} = payload;
-      const {response = {}} = await sendRequest({
+      const addressResponse = await sendRequest({
         variables: {
           client: client.id,
           address,
@@ -32,6 +32,8 @@ const useAddressSaveClient = (options = {}) => {
           lng,
         },
       });
+      const {data = {}} = addressResponse;
+      const {response} = data;
       if (onSuccess) {
         onSuccess(response);
       }
