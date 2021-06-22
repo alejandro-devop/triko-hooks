@@ -9,7 +9,7 @@ import {APP_CODE} from 'react-native-dotenv';
  */
 const useRegionConfig = () => {
   const {
-    stack: {regionalConfig},
+    stack: {regionalConfig, region},
   } = useSession();
   const {
     payments = {},
@@ -55,16 +55,21 @@ const useRegionConfig = () => {
   const {minimumScheduleAnticipation = 30} = requests;
   const {radius = '20'} = search;
   const {place2payUrl, paymentContactEmail} = placetopay;
+
+  const regionSelect = (options, defValue = null) =>
+    options[region] || defValue;
+
   const {
     maximumRate,
-    minimumRate = 6000,
+    minimumRate = regionSelect({'es-CO': 6000, 'en-US': 1}),
     rateStep,
-    rateStepAlternative = 1000,
-    minimumIncentiveStep = 100,
-    minimumMoneyStep = 50,
-    shopperMinimumRate = 10000,
-    taskMinimumRate = 10000,
-    courierMinimumRate = 10000,
+    rateStepAlternative = regionSelect({'es-CO': 1000, 'en-US': 1}),
+    minimumIncentiveStep = regionSelect({'es-CO': 100, 'en-US': 1}),
+    minimumMoneyStep = regionSelect({'es-CO': 50, 'en-US': 1}),
+    shopperMinimumRate = regionSelect({'es-CO': 10000, 'en-US': 10}),
+    taskMinimumRate = regionSelect({'es-CO': 10000, 'en-US': 10}),
+    courierMinimumRate = regionSelect({'es-CO': 10000, 'en-US': 10}),
+    minimumTrikoCreditAmount = regionSelect({'es-CO': 1000, 'en-US': 10}),
   } = rate;
 
   const appConfigs = {
@@ -100,6 +105,7 @@ const useRegionConfig = () => {
     taskMinimumRate,
     courierMinimumRate,
     requestFetchInterval,
+    minimumTrikoCreditAmount,
   };
   return appConfigs;
 };
